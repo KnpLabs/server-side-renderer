@@ -1,0 +1,7 @@
+# ignore all by default
+*
+
+!src/
+!.babelrc
+!package.json
+!yarn.lock

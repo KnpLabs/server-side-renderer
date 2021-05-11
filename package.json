@@ -1,0 +1,27 @@
+{
+  "name": "chromium-pool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bull": "^3.22.4",
+    "express": "^4.17.1",
+    "puppeteer": "^9.1.1",
+    "ramda": "^0.27.1",
+    "tree-kill": "^1.2.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.14.1",
+    "nodemon": "^2.0.7",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "scripts": {
+    "dev": "nodemon --watch src/ --exec babel-node src/index.js",
+    "build": "babel src/ -d build/ --ignore 'src/**/*.test.js'",
+    "start": "node build/index.js"
+  }
+}

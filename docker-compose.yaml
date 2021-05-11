@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  chromium_pool:
+    image: knplabs:chromium_pool
+    env_file: .env
+    build:
+      context: .
+      target: dev
+    command: 'yarn dev'
+    ports:
+      - "8990:8990"
+    volumes:
+      - ./:/app
+
+  redis:
+    image: redis:6.2.2-buster
