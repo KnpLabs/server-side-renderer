@@ -16,12 +16,16 @@
     "@babel/core": "^7.14.0",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.14.1",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "regenerator-runtime": "^0.13.7"
   },
   "scripts": {
-    "dev": "nodemon --watch src/ --exec babel-node src/index.js",
+    "start-dev": "nodemon --watch src/ --ignore 'src/**/*.test.js' --exec babel-node src/index.js",
     "build": "babel src/ -d build/ --ignore 'src/**/*.test.js'",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "test": "jest"
   }
 }

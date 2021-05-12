@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    image: knplabs/server-side-renderer:dev
+    build:
+      context: .
+      target: dev
+    depends_on:
+      - redis
+    env_file: .env
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
+
+  redis:
+    image: redis:6.2.2-buster
+
+  nginx:
+    image: nginx:1.20.0
+    volumes:
+      - ./fixtures/nginx/html:/usr/share/nginx/html:ro

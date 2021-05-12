@@ -62,6 +62,7 @@ const renderPageContent = async (configuration, logger, browser, url) => {
         waitUntil: 'networkidle0',
     });
 
+    // @todo resolve the page status code
     return await page.content();
 }
 
@@ -70,9 +71,9 @@ const cleanup = async browser => {
     await browser.close();
 
     // @todo check why these lines makes the app crash
-    if (browser && null !== browser.process()) {
-        treekill(browser.process().pid, 'SIGKILL')
-    }
+    //if (browser && null !== browser.process()) {
+    //    treekill(browser.process().pid, 'SIGKILL')
+    //}
 }
 
 export default (configuration, logger) => async url => {

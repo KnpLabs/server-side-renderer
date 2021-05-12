@@ -1,3 +1,5 @@
+# @todo optimize the Docker image
+
 FROM node:slim as dev
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
@@ -28,7 +30,7 @@ RUN yarn install
 USER 1000
 
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["yarn", "dev"]
+CMD ["yarn", "start-dev"]
 
 ################################################################################
 
