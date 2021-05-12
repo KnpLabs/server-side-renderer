@@ -18,12 +18,12 @@ const onJobFailed = (logger, requestRegistry) => (jobId, error) => when(
     ]),
 )(jobId)
 
-// initManager :: (Logger, Queue) -> _
-export default (logger, queue) => call(pipe(
+// initManager :: (Configuration, Logger, Queue) -> _
+export default (configuration, logger, queue) => call(pipe(
     () => logger.info('Initializing manager.'),
     () => createRequestRegistry(),
     tap(requestRegistry => queue.on('global:completed', onJobCompleted(logger, requestRegistry))),
     tap(requestRegistry => queue.on('global:failed', onJobFailed(logger, requestRegistry))),
-    requestRegistry => initHttpServer(logger, queue, requestRegistry),
+    requestRegistry => initHttpServer(configuration, logger, queue, requestRegistry),
     () => logger.info('Manager initialized.'),
 ))

@@ -1,11 +1,11 @@
 import { __, bind, equals, findIndex, gt, gte, partial, pipe, when, pickAll } from 'ramda'
 
-const LEVEL_ERROR = 'ERROR'
-const LEVEL_WARN = 'WARN'
-const LEVEL_INFO = 'INFO'
-const LEVEL_DEBUG = 'DEBUG'
+export const LEVEL_ERROR = 'ERROR'
+export const LEVEL_WARN = 'WARN'
+export const LEVEL_INFO = 'INFO'
+export const LEVEL_DEBUG = 'DEBUG'
 
-const levels = [
+export const levels = [
     LEVEL_ERROR,
     LEVEL_WARN,
     LEVEL_INFO,
@@ -62,8 +62,6 @@ const debug = (level, output) => when(
         [loggerHead(LEVEL_DEBUG)],
     ),
 )(level)
-
-export const DEFAULT_LEVEL = LEVEL_DEBUG
 
 export const formatException = e => JSON.stringify(pickAll(['code', 'message', 'stack'], e))
 
