@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  manager:
+    image: knplabs/server-side-renderer:test
+    build:
+      context: .
+      target: prod
+    depends_on:
+      - redis
+    environment:
+      - MANAGER_ENABLED=1
+      - QUEUE_REDIS_DSN=redis://redis:6379
+    ports:
+      - "80:80"
+
+  worker:
+    image: knplabs/server-side-renderer:test
+    build:
+      context: .
+      target: prod
+    depends_on:
+      - redis
+    environment:
+      - WORKER_ENABLED=1
+      - QUEUE_REDIS_DSN=redis://redis:6379
+
+  redis:
+    image: redis:6.2.2-buster
+
+  nginx:
+    image: nginx:1.20.0
+    volumes:
+      - ./fixtures/nginx/html:/usr/share/nginx/html:ro
