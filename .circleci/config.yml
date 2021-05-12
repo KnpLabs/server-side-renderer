@@ -1,0 +1,50 @@
+version: 2
+
+references:
+  defaults: &defaults
+    working_directory: ~/server-side-renderer
+    machine:
+      image: ubuntu-1604:202104-01
+      docker_layer_caching: true
+
+jobs:
+  tests:
+    <<: *defaults
+    environment:
+      - STAGE: "test"
+    steps:
+      - checkout      
+      - run:
+          name: Start test stack
+          command: make start
+      - run:
+          name: Run tests
+          command: make test
+
+  build_and_push:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Build docker images
+          command: IMAGE_TAG=${CIRCLE_TAG} make build
+      - run:
+          name: Push docker images
+          command: |
+            echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_LOGIN --password-stdin
+            IMAGE_TAG=${CIRCLE_TAG} make push
+            IMAGE_TAG=${CIRCLE_TAG} make push-latest
+
+workflows:
+  version: 2
+
+  tests:
+    jobs:
+      - tests
+
+  build_and_push:
+    jobs:
+      - build_and_push:
+          filters:
+            branches: { ignore: /.*/ }
+            tags: { only: /^v.*/ }
