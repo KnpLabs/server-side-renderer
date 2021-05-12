@@ -16,12 +16,14 @@
     "@babel/core": "^7.14.0",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.14.1",
+    "eslint": "^7.26.0",
     "nodemon": "^2.0.7",
     "regenerator-runtime": "^0.13.7"
   },
   "scripts": {
     "dev": "nodemon --watch src/ --exec babel-node src/index.js",
     "build": "babel src/ -d build/ --ignore 'src/**/*.test.js'",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "lint": "eslint \"./src\""
   }
 }

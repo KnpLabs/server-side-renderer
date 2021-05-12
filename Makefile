@@ -14,3 +14,7 @@ ifeq ($(IMAGE_TAG),)
 	@echo "You can't build and push without an IMAGE_TAG.\n"
 	@exit 1
 endif
+
+.PHONY: lint
+lint: ## Run eslint locally
+	docker-compose run --rm chromium_pool yarn lint --fix
