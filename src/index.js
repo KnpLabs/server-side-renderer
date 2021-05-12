@@ -1,24 +1,23 @@
 import 'regenerator-runtime/runtime' // needed by the SSR to be able to execute transpiled generator functions like async/await
-import { call, equals, pipe }  from 'ramda'
-import { default as createLogger, DEFAULT_LEVEL } from './logger'
-import setupProcessHandlers from './processHandlers'
+import { call, pipe }  from 'ramda'
+import createConfiguration from './configuration'
+import createLogger from './logger'
 import createQueue from './queue'
 import initManager from './manager'
 import initWorker from './worker'
+import setupProcessHandlers from './processHandlers'
 
-const logger = createLogger(process.env.LOG_LEVEL || DEFAULT_LEVEL, console)
+const configuration = createConfiguration()
 
-const queue = createQueue(process.env.QUEUE_REDIS_DSN)
+const logger = createLogger(configuration.log.level, console)
 
-const shouldStartManager = () => equals(1, Number(process.env.MANAGER_ENABLED))
+const queue = createQueue(configuration.queue.redis_dsn)
 
-const shouldStartWorker = () => equals(1, Number(process.env.WORKER_ENABLED))
-
-// main :: (Logger, Queue) => _
-const main = (logger, queue) => call(pipe(
-    () => shouldStartManager() && initManager(logger, queue),
-    () => shouldStartWorker() && initWorker(logger, queue),
+// main :: (Configuration, Logger, Queue) => _
+const main = (configuration, logger, queue) => call(pipe(
+    () => configuration.manager.enabled && initManager(configuration, logger, queue),
+    () => configuration.worker.enabled && initWorker(configuration, logger, queue),
     () => setupProcessHandlers(logger),
 ))
 
-main(logger, queue)
+main(configuration, logger, queue)

@@ -1,4 +1,4 @@
-import { __, T, complement, cond, includes, pipe } from 'ramda'
+import { __, T, anyPass, complement, cond, equals, find, isNil, pipe, test } from 'ramda'
 import { formatException } from './../../logger'
 import puppeteer from 'puppeteer'
 import treekill from 'tree-kill'
@@ -21,35 +21,39 @@ const spawnBrowser = async () => await puppeteer.launch({
 
 const resolveRequestDomain = req => req.url().match(/^(https?:\/\/)?(?<host>[^/]+)/).groups.host
 
-const REQUEST_AUHTORIZED_DOMAINS = process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS
-    ? process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS.split(',').map(item => item.trim())
-    : []
+const isMatchingDomain = input => anyPass([
+    equals('*'),
+    value => test(new RegExp(`${value}$`, 'i'), input),
+])
 
-const isRequestDomainAuthorized = pipe(
+const isRequestDomainAuthorized = authorizedRequestDomains => pipe(
     resolveRequestDomain,
-    includes(__, REQUEST_AUHTORIZED_DOMAINS),
+    domain => find(isMatchingDomain(domain), authorizedRequestDomains),
+    complement(isNil),
 )
 
-const REQUEST_AUHTORIZED_TYPES = process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_TYPES
-    ? process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_TYPES.split(',').map(item => item.trim())
-    : []
+const isMatchingResourceType = input => anyPass([
+    equals('*'),
+    equals(input),
+])
 
-const isRequestTypeAuthorized = pipe(
+const isRequestResourceAuthorized = authorizedRequestResources => pipe(
     req => req.resourceType(),
-    includes(__, REQUEST_AUHTORIZED_TYPES),
+    resourceType => find(isMatchingResourceType(resourceType), authorizedRequestResources),
+    complement(isNil),
 )
 
 const allowRequest = req => req.continue()
 
-const blockRequest = req => console.log(`Abort request ${req.url()}`) || req.abort()
+const blockRequest = (logger, reason) => req => logger.debug(`Abort request ${req.url()} because of non authorized ${reason}.`) || req.abort()
 
-const renderPageContent = async (browser, url) => {
+const renderPageContent = async (configuration, logger, browser, url) => {
     const page = await browser.newPage();
 
     await page.setRequestInterception(true)
     page.on('request', cond([
-        [complement(isRequestDomainAuthorized), blockRequest],
-        [complement(isRequestTypeAuthorized), blockRequest],
+        [complement(isRequestDomainAuthorized(configuration.worker.renderer.authorized_request_domains)), blockRequest(logger, 'domain')],
+        [complement(isRequestResourceAuthorized(configuration.worker.renderer.authorized_request_resources)), blockRequest(logger, 'resource type')],
         // @todo add request redirection
         [T, allowRequest],
     ]))
@@ -71,11 +75,11 @@ const cleanup = async browser => {
     }
 }
 
-export default logger => async url => {
+export default (configuration, logger) => async url => {
     const browser = await spawnBrowser();
 
     try {
-        return await renderPageContent(browser, url)
+        return await renderPageContent(configuration, logger, browser, url)
     } catch (error) {
         logger.error(
             `An error occurred while rendering the url "${url}".`,

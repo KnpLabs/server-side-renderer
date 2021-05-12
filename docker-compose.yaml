@@ -7,7 +7,6 @@ services:
     build:
       context: .
       target: dev
-    command: 'yarn dev'
     ports:
       - "8990:8990"
     volumes:
