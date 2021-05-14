@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   manager:
-    image: knplabs/server-side-renderer:test
+    image: knplabs/server-side-renderer:manager-test
     build:
       context: .
       target: prod
@@ -11,11 +11,9 @@ services:
     environment:
       - MANAGER_ENABLED=1
       - QUEUE_REDIS_DSN=redis://redis:6379
-    ports:
-      - "80:80"
 
   worker:
-    image: knplabs/server-side-renderer:test
+    image: knplabs/server-side-renderer:worker-test
     build:
       context: .
       target: prod
@@ -32,3 +30,12 @@ services:
     image: nginx:1.20.0
     volumes:
       - ./fixtures/nginx/html:/usr/share/nginx/html:ro
+
+  test:
+    image: knplabs/server-side-renderer:test-runner-test
+    build:
+      context: .
+      target: dev
+    command: yarn test
+    profiles:
+      - test

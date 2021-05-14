@@ -5,7 +5,7 @@ const trimStringForComparison = str => str.replace(/^[\s]+|[\s]+$/gm, '').replac
 
 describe('e2e :: static', () => {
     it(`asserts that the page is rendered`, async () => {
-        const res = await fetch(`http://127.0.0.1/render?url=http://nginx/static.html`)
+        const res = await fetch(`http://manager:8080/render?url=http://nginx/static.html`)
         const content = await res.text()
 
         expect(res.status).toBe(200)
@@ -26,7 +26,7 @@ describe('e2e :: static', () => {
 
 describe('e2e :: dynamic', () => {
     it(`asserts that the page is rendered`, async () => {
-        const res = await fetch(`http://127.0.0.1/render?url=http://nginx/dynamic.html`)
+        const res = await fetch(`http://manager:8080/render?url=http://nginx/dynamic.html`)
         const content = await res.text()
 
         expect(res.status).toBe(200)

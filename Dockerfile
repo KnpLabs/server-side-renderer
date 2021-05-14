@@ -41,7 +41,7 @@ USER root
 ENV BABEL_ENV=production
 ENV NODE_ENV=production
 
-RUN yarn run build
+RUN yarn build
 
 USER 1000
 

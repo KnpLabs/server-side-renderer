@@ -56,7 +56,7 @@ const generate = () => ({
         enabled: 1 === Number(process.env.MANAGER_ENABLED),
         http_server: {
             host: process.env.MANAGER_HTTP_SERVER_HOST || '0.0.0.0',
-            port: Number(process.env.MANAGER_HTTP_SERVER_PORT) || 80,
+            port: Number(process.env.MANAGER_HTTP_SERVER_PORT) || 8080,
         },
     },
     worker: {
