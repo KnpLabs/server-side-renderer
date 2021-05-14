@@ -13,7 +13,7 @@ jobs:
     environment:
       - STAGE: "test"
     steps:
-      - checkout      
+      - checkout
       - run:
           name: Start test stack
           command: make start

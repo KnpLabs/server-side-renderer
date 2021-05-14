@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  app:
-    image: knplabs/server-side-renderer:dev
+  manager:
+    image: knplabs/server-side-renderer:manager-dev
     build:
       context: .
       target: dev
@@ -10,7 +10,7 @@ services:
       - redis
     env_file: .env
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
       - ./:/app
 
@@ -21,3 +21,14 @@ services:
     image: nginx:1.20.0
     volumes:
       - ./fixtures/nginx/html:/usr/share/nginx/html:ro
+
+  test:
+    image: knplabs/server-side-renderer:test-runner-dev
+    build:
+      context: .
+      target: dev
+    command: yarn test
+    volumes:
+      - ./:/app
+    profiles:
+      - test

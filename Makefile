@@ -2,11 +2,14 @@ STAGE ?= dev
 FORCE_PUSH_OVERRIDE ?= 0
 IMAGE_NAME = knplabs/server-side-renderer
 
+.PHONY: dev
+dev: .cp-env start
+	$(MAKE) .install-deps
+
 .PHONY: start
-start: .cp-env
+start:
 	docker-compose -f docker-compose.${STAGE}.yaml build
 	docker-compose -f docker-compose.${STAGE}.yaml up -d
-	$(MAKE) .install-deps
 
 .PHONY: stop
 stop:
@@ -14,7 +17,7 @@ stop:
 
 .PHONY: test
 test:
-	docker run --rm -v $(PWD):/app:ro --network host knplabs/server-side-renderer:${STAGE} yarn test
+	docker-compose -f docker-compose.${STAGE}.yaml run --rm test yarn test
 
 .PHONY: build
 build: .validate-tag
@@ -32,18 +35,17 @@ push-latest: .validate-tag
 .PHONY: .cp-env
 .cp-env:
 ifeq ($(STAGE),dev)
-	cp -n .env.dev.dist .env
+	cp -n .env.dist .env
 endif
 
 .PHONY: .install-deps
 .install-deps:
 ifeq ($(STAGE),dev)
-	docker-compose -f docker-compose.dev.yaml run --rm app yarn install
-else ifneq ($(STAGE),test)
+	docker-compose -f docker-compose.dev.yaml run --rm manager yarn install
+else
 	@echo "You can't install app dependencies on non-dev environments.\n"
 	@exit 1
 endif
-
 .PHONY: .validate-tag
 .validate-tag:
 ifeq ($(IMAGE_TAG),)
