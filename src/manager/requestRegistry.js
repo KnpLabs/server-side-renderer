@@ -1,5 +1,15 @@
 import { v4 as uuidv4 } from 'uuid'
 
+/**
+ * @type RequestRegistry = {
+ *     has :: String -> Boolean,
+ *     add :: (Request, Response, Next) -> String,
+ *     complete :: (String, String) -> _,
+ *     fail :: (String, String) -> _,
+ * }
+ */
+
+// createRequestRegistry :: () -> RequestRegistry
 export default () => ({
     _requests: {},
 

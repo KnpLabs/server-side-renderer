@@ -1,54 +1,45 @@
 import { __, T, anyPass, complement, cond, equals, find, isNil, pipe, test } from 'ramda'
-import { formatException } from './../../logger'
-import puppeteer from 'puppeteer'
-import treekill from 'tree-kill'
+import { formatException } from './../../../logger'
+import getBrowserProvider from './browserProvider'
 
-const spawnBrowser = async () => await puppeteer.launch({
-    args: [
-        // @todo check on these parameters
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--disable-setuid-sandbox',
-        '--disable-software-rasterizer',
-        '--headless',
-        '--no-sandbox',
-        '--safebrowsing-disable-auto-update',
-        '--use-gl=disabled',
-        '--single-process',
-    ],
-    defaultViewport: null,
-})
-
+// resolveRequestDomain :: Request -> String
 const resolveRequestDomain = req => req.url().match(/^(https?:\/\/)?(?<host>[^/]+)/).groups.host
 
+// isMatchingDomain :: String -> String -> Boolean
 const isMatchingDomain = input => anyPass([
     equals('*'),
     value => test(new RegExp(`${value}$`, 'i'), input),
 ])
 
+// isRequestDomainAuthorized :: [String] -> Request -> Boolean
 const isRequestDomainAuthorized = authorizedRequestDomains => pipe(
     resolveRequestDomain,
     domain => find(isMatchingDomain(domain), authorizedRequestDomains),
     complement(isNil),
 )
 
+// isMatchingResourceType :: String -> String -> Boolean
 const isMatchingResourceType = input => anyPass([
     equals('*'),
     equals(input),
 ])
 
+// isRequestResourceAuthorized :: [String] -> Request -> Boolean
 const isRequestResourceAuthorized = authorizedRequestResources => pipe(
     req => req.resourceType(),
     resourceType => find(isMatchingResourceType(resourceType), authorizedRequestResources),
     complement(isNil),
 )
 
+// allowRequest :: Request -> _
 const allowRequest = req => req.continue()
 
+// blockRequest :: (Logger, String) -> Request -> _
 const blockRequest = (logger, reason) => req => logger.debug(`Abort request ${req.url()} because of non authorized ${reason}.`) || req.abort()
 
-const renderPageContent = async (configuration, logger, browser, url) => {
-    const page = await browser.newPage();
+// renderPageContent :: (Configuration, Logger, BrowserInstance, String) -> RenderedPage
+const renderPageContent = async (configuration, logger, browserInstance, url) => {
+    const page = await browserInstance.newPage();
 
     await page.setRequestInterception(true)
     page.on('request', cond([
@@ -62,31 +53,22 @@ const renderPageContent = async (configuration, logger, browser, url) => {
         waitUntil: 'networkidle0',
     });
 
-    // @todo resolve the page status code
-    return await page.content();
+    return await page.content()
 }
 
-const cleanup = async browser => {
-    await browser.removeAllListeners();
-    await browser.close();
-
-    // @todo check why these lines makes the app crash
-    //if (browser && null !== browser.process()) {
-    //    treekill(browser.process().pid, 'SIGKILL')
-    //}
-}
-
+// render :: (Configuration, Logger) -> String
 export default (configuration, logger) => async url => {
-    const browser = await spawnBrowser();
+    const browserProvider = getBrowserProvider();
+    const browserInstance = await browserProvider.getInstance()
 
     try {
-        return await renderPageContent(configuration, logger, browser, url)
+        return await renderPageContent(configuration, logger, browserInstance, url)
     } catch (error) {
         logger.error(
             `An error occurred while rendering the url "${url}".`,
             formatException(error),
         )
     } finally {
-        cleanup(browser)
+        browserProvider.cleanup()
     }
 }

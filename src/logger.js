@@ -1,5 +1,14 @@
 import { __, bind, equals, findIndex, gt, gte, partial, pipe, when, pickAll } from 'ramda'
 
+/**
+ * @type Logger = {
+ *     error :: String -> _,
+ *     info :: String -> _,
+ *     debug :: String -> _,
+ *     warn :: String -> _,
+ * }
+ */
+
 export const LEVEL_ERROR = 'ERROR'
 export const LEVEL_WARN = 'WARN'
 export const LEVEL_INFO = 'INFO'
@@ -63,6 +72,7 @@ const debug = (level, output) => when(
     ),
 )(level)
 
+// formatException :: Error -> String
 export const formatException = e => JSON.stringify(pickAll(['code', 'message', 'stack'], e))
 
 // createLogger :: (String, Output) -> Logger

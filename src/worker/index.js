@@ -1,5 +1,5 @@
 import { call, pipe } from 'ramda';
-import render from './renderers/chromeRenderer'
+import render from './renderers/chrome'
 
 // initWorker :: (Configuration, Logger, Queue) -> _
 export default (configuration, logger, queue) => call(pipe(
