@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: .
+    labels:
+      - dependencies
+      - javascript
+    schedule:
+      interval: daily
+      time: '00:00'
+    open-pull-requests-limit: 99
+  - package-ecosystem: docker
+    directory: .
+    labels:
+      - dependencies
+      - docker
+    schedule:
+      interval: daily
+      time: '00:00'
+    ignore:
+      # ATM Node 14 is the LTS version and Node 15 is the current version so
+      # we ignore version 15 updates as we don't want to update to
+      # non-stable releases.
+      - dependency-name: "node"
+        versions: ["15.x"]
