@@ -18,8 +18,8 @@ updates:
       interval: daily
       time: '00:00'
     ignore:
-      # ATM Node 14 is the LTS version and Node 15 is the current version so
-      # we ignore version 15 updates as we don't want to update to
+      # ATM Node 14 is the LTS version and Node 16 is the current version so
+      # we ignore version 15 and 16 updates as we don't want to update to
       # non-stable releases.
       - dependency-name: "node"
-        versions: ["15.x"]
+        versions: ["15.x", "16.x"]
