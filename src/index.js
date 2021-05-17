@@ -15,9 +15,9 @@ const queue = createQueue(configuration.queue.redis_dsn)
 
 // main :: (Configuration, Logger, Queue) => _
 const main = (configuration, logger, queue) => call(pipe(
-    () => configuration.manager.enabled && initManager(configuration, logger, queue),
-    () => configuration.worker.enabled && initWorker(configuration, logger, queue),
-    () => setupProcessHandlers(logger),
+  () => configuration.manager.enabled && initManager(configuration, logger, queue),
+  () => configuration.worker.enabled && initWorker(configuration, logger, queue),
+  () => setupProcessHandlers(logger),
 ))
 
 main(configuration, logger, queue)

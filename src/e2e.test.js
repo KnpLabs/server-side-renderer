@@ -1,15 +1,15 @@
 import 'regenerator-runtime/runtime' // needed by the SSR to be able to execute transpiled generator functions like async/await
 import fetch from 'node-fetch'
 
-const trimStringForComparison = str => str.replace(/^[\s]+|[\s]+$/gm, '').replace(/\n/g, '');
+const trimStringForComparison = str => str.replace(/^[\s]+|[\s]+$/gm, '').replace(/\n/g, '')
 
 describe('e2e :: static', () => {
-    it(`asserts that the page is rendered`, async () => {
-        const res = await fetch(`http://manager:8080/render?url=http://nginx/static.html`)
-        const content = await res.text()
+  it(`asserts that the page is rendered`, async () => {
+    const res = await fetch(`http://manager:8080/render?url=http://nginx/static.html`)
+    const content = await res.text()
 
-        expect(res.status).toBe(200)
-        expect(trimStringForComparison(content)).toBe(trimStringForComparison(`
+    expect(res.status).toBe(200)
+    expect(trimStringForComparison(content)).toBe(trimStringForComparison(`
             <!DOCTYPE html>
             <html lang="en">
                 <head>
@@ -21,16 +21,16 @@ describe('e2e :: static', () => {
                 </body>
             </html>
         `))
-    })
+  })
 })
 
 describe('e2e :: dynamic', () => {
-    it(`asserts that the page is rendered`, async () => {
-        const res = await fetch(`http://manager:8080/render?url=http://nginx/dynamic.html`)
-        const content = await res.text()
+  it(`asserts that the page is rendered`, async () => {
+    const res = await fetch(`http://manager:8080/render?url=http://nginx/dynamic.html`)
+    const content = await res.text()
 
-        expect(res.status).toBe(200)
-        expect(trimStringForComparison(content)).toBe(trimStringForComparison(`
+    expect(res.status).toBe(200)
+    expect(trimStringForComparison(content)).toBe(trimStringForComparison(`
             <!DOCTYPE html>
             <html lang="en">
                 <head>
@@ -56,5 +56,5 @@ describe('e2e :: dynamic', () => {
                 </body>
             </html>
         `))
-    })
+  })
 })

@@ -14,8 +14,8 @@ export const onUncaughtException = logger => pipe(
 const setUpUncaughtExceptionHandler = logger =>
   process.on('uncaughtException', onUncaughtException(logger))
 
-// onUnhandledRejection :: Logger -> (Error, Promise) -> void
-export const onUnhandledRejection = logger => (error, promise) =>
+// onUnhandledRejection :: Logger -> Error -> void
+export const onUnhandledRejection = logger => error =>
   logger.error(
     'A promise has been rejected without being properly handled.',
     formatException(error),
@@ -28,7 +28,7 @@ const setUpUnhandledRejectionHandler = logger =>
 // performGracefulShutdown :: Logger -> void
 const performGracefulShutdown = logger => call(pipe(
   () => logger.info(`Graceful shutdown started.`),
-  () => process.exit(0)
+  () => process.exit(0),
 ))
 
 // onTerminationSignal :: Logger-> void
