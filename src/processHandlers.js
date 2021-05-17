@@ -1,4 +1,4 @@
-import { call, pickAll, pipe } from 'ramda'
+import { call, pipe } from 'ramda'
 import { formatException } from './logger'
 
 // onUncaughtException :: Logger -> Error -> void

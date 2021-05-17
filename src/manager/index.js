@@ -2,6 +2,7 @@ import { call, juxt, pipe, tap, when } from 'ramda'
 import initHttpServer from './http-server'
 import createRequestRegistry from './requestRegistry'
 
+// onJobCompleted :: (Logger, RequestRegistry) -> Function
 const onJobCompleted = (logger, requestRegistry) => (jobId, result) => when(
     jobId => requestRegistry.has(jobId),
     juxt([
@@ -10,6 +11,7 @@ const onJobCompleted = (logger, requestRegistry) => (jobId, result) => when(
     ]),
 )(jobId)
 
+// onJobFailed :: (Logger, RequestRegistry) -> Function
 const onJobFailed = (logger, requestRegistry) => (jobId, error) => when(
     jobId => requestRegistry.has(jobId),
     juxt([
