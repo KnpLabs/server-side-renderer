@@ -3,8 +3,8 @@ FORCE_PUSH_OVERRIDE ?= 0
 IMAGE_NAME = knplabs/server-side-renderer
 
 .PHONY: dev
-dev: .cp-env start
-	$(MAKE) .install-deps
+dev: cp-env start
+	$(MAKE) install-deps
 
 .PHONY: start
 start:
@@ -32,20 +32,21 @@ push-latest: .validate-tag
 	docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest
 	docker image push ${IMAGE_NAME}:latest
 
-.PHONY: .cp-env
-.cp-env:
+.PHONY: cp-env
+cp-env:
 ifeq ($(STAGE),dev)
 	cp -n .env.dist .env
 endif
 
-.PHONY: .install-deps
-.install-deps:
+.PHONY: install-deps
+install-deps:
 ifeq ($(STAGE),dev)
 	docker-compose -f docker-compose.dev.yaml run --rm manager yarn install
 else
 	@echo "You can't install app dependencies on non-dev environments.\n"
 	@exit 1
 endif
+
 .PHONY: .validate-tag
 .validate-tag:
 ifeq ($(IMAGE_TAG),)
@@ -60,4 +61,13 @@ ifeq ($(FORCE_PUSH_OVERRIDE),0)
 		echo "Image ${IMAGE_NAME} with tag ${IMAGE_TAG} found on remote registry."; \
 		exit 1; \
 	fi;
+endif
+
+.PHONY: lint
+lint:
+ifeq ($(STAGE),dev)
+	docker-compose -f docker-compose.dev.yaml run --rm manager yarn lint --fix
+else
+	@echo "You can't run eslint on non-dev environments.\n"
+	@exit 1
 endif
