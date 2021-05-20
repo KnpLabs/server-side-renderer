@@ -3,6 +3,7 @@ import {
   T,
   __,
   allPass,
+  anyPass,
   complement,
   compose,
   filter,
@@ -41,7 +42,7 @@ const validate = allPass([
 const commaSeparatedStringToArray = pipe(
   split(','),
   map(trim),
-  filter(complement(isNil)),
+  filter(complement(anyPass([isNil, isEmpty]))),
 )
 
 // generate :: _ -> Configuration
