@@ -31,13 +31,7 @@ COPY --chown=1000:1000 .babelrc .babelrc
 
 RUN yarn install
 
-# Run everything after as non-privileged user.
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser
-
-USER pptruser
-COPY --chown=pptruser . /app
+USER 1000
 
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["yarn", "start-dev"]
@@ -53,7 +47,6 @@ ENV NODE_ENV=production
 
 RUN yarn build
 
-USER pptruser
-COPY --chown=pptruser . /app
+USER 1000
 
 CMD ["yarn", "start"]
