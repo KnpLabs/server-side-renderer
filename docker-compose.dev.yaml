@@ -21,12 +21,16 @@ services:
     image: nginx:1.20.0
     volumes:
       - ./fixtures/nginx/html:/usr/share/nginx/html:ro
+      - ./fixtures/nginx/templates:/etc/nginx/templates:ro
 
   test:
     image: knplabs/server-side-renderer:test-runner-dev
     build:
       context: .
       target: dev
+    depends_on:
+      - manager
+      - nginx
     command: yarn test
     volumes:
       - ./:/app

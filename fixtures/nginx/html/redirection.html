@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>A dynamic HTML page (redirections)</title>
+    </head>
+    <body>
+        <h1>A dynamic HTML page (redirections)</h1>
+        <script>
+            window.onload = event => {
+                fetch('http://external-nginx/dynamic.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const newParagraph = document.createElement("p");
+                        const newContent = document.createTextNode(data.content);
+                        newParagraph.appendChild(newContent);
+
+                        document.body.append(newParagraph)
+                    });
+            };
+        </script>
+    </body>
+</html>
