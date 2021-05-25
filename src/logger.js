@@ -1,4 +1,4 @@
-import { F, always, bind, equals, findIndex, gt, gte, ifElse, partial, pickAll, pipe, when } from 'ramda'
+import { F, always, bind, equals, findIndex, gte, ifElse, partial, pickAll } from 'ramda'
 
 /**
  * @type Logger = {

@@ -10,6 +10,7 @@ services:
       - redis
     environment:
       - MANAGER_ENABLED=1
+      - WORKER_ENABLED=0
       - QUEUE_REDIS_DSN=redis://redis:6379
 
   worker:
@@ -20,8 +21,10 @@ services:
     depends_on:
       - redis
     environment:
+      - MANAGER_ENABLED=0
       - WORKER_ENABLED=1
       - QUEUE_REDIS_DSN=redis://redis:6379
+      - WORKER_RENDERER_REDIRECTED_DOMAINS=external-nginx|nginx
 
   redis:
     image: redis:6.2.2-buster
@@ -30,12 +33,17 @@ services:
     image: nginx:1.20.0
     volumes:
       - ./fixtures/nginx/html:/usr/share/nginx/html:ro
+      - ./fixtures/nginx/templates:/etc/nginx/templates:ro
 
   test:
     image: knplabs/server-side-renderer:test-runner-test
     build:
       context: .
       target: dev
+    depends_on:
+      - manager
+      - worker
+      - nginx
     command: yarn test
     volumes:
       - ./src:/app/src:ro
