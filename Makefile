@@ -63,11 +63,15 @@ ifeq ($(FORCE_PUSH_OVERRIDE),0)
 	fi;
 endif
 
-.PHONY: lint
-lint:
-ifeq ($(STAGE),dev)
-	docker-compose -f docker-compose.dev.yaml run --rm manager yarn lint --fix
-else
-	@echo "You can't run eslint on non-dev environments.\n"
-	@exit 1
-endif
+.PHONY: lint-dockerfiles
+lint-dockerfiles:
+	docker run --rm -i hadolint/hadolint < Dockerfile
+
+.PHONY: lint-js
+lint-js:
+	docker-compose -f docker-compose.$(STAGE).yaml run --rm test yarn lint
+
+.PHONY: fix-js
+fix-js:
+	docker-compose -f docker-compose.$(STAGE).yaml run --rm test yarn lint --fix
+
