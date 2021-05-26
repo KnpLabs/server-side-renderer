@@ -12,7 +12,7 @@ RUN apt-get update \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y \
-      google-chrome-stable=90.0.4430.212-1 \
+      google-chrome-stable=91.0.4472.77-1 \
       fonts-ipafont-gothic=00303-16 \
       fonts-wqy-zenhei=0.9.45-6 \
       fonts-thai-tlwg=1:0.6.3-1 \
