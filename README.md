@@ -2,7 +2,7 @@ Server-side-renderer
 ======================================================
 
 | Branch    | Status |
-|-----------|--------|
+| --------- | ------ |
 | `master`  | [![CircleCI](https://circleci.com/gh/KnpLabs/server-side-renderer/tree/master.svg?style=svg&circle-token=1feb6f789ade0c11ee8b87e90eadbe9e6778fcb7)](https://circleci.com/gh/KnpLabs/server-side-renderer/tree/master) |
 
 ## Description
@@ -32,7 +32,7 @@ This command will build and start the docker containers and update dependencies.
 ## Make commands
 
 | Command              | Description                                                                      |
-| -------------------- | ---------------------------------------------------------------------------------|
+| -------------------- | -------------------------------------------------------------------------------- |
 | `dev`                | Build and start the stack (Combination of `cp-env`, `start`, `install-deps`)     |
 | `cp-env`             | Copy the `.env.dist` file into `.env` if it does not exist                       |
 | `start`              | Start the docker-compose stack                                                   |
@@ -42,17 +42,23 @@ This command will build and start the docker containers and update dependencies.
 | `push`               | Push docker image on DockerHub (image tag required)                              |
 | `push-latest`        | Push docker image with latest tag (image tag required)                           |
 
-## Make commands for run tests
+## Test commands
 
-| Command              | Description       |
-| -------------------- | ------------------|
-| `test`               | Run unit tests    |
+| Command              | Description                           |
+| -------------------- | ------------------------------------- |
+| `test`               | Runs the tests (unit + end to end)    |
 
-## Make commands for run linter
+## Linting commands
 
-| Command              | Description                    |
-| -------------------- | -------------------------------|
-| `lint`               | Run linter on the application  |
+| Command              | Description                         |
+| -------------------- | ----------------------------------- |
+| `lint-dockerfiles`   | Runs the Dockerfile's linter        |
+| `lint-js`            | Runs the JavaScript's linter        |
+| `fix-js`             | Fixes JavaScript code styles issues |
+
+## How to use
+
+TODO
 
 ## Maintainers
 

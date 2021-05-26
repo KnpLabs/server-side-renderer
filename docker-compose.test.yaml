@@ -51,5 +51,6 @@ services:
       - ./yarn.lock:/app/yarn.lock:ro
       - ./.babelrc:/app/.babelrc:ro
       - ./jest.config.js:/app/jest.config.js:ro
+      - ./.eslintrc.json:/app/.eslintrc.json:ro
     profiles:
       - test

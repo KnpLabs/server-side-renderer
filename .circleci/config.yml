@@ -8,7 +8,7 @@ references:
       docker_layer_caching: true
 
 jobs:
-  tests:
+  test_and_lint:
     <<: *defaults
     environment:
       - STAGE: "test"
@@ -20,6 +20,12 @@ jobs:
       - run:
           name: Run tests
           command: make test
+      - run:
+          name: Lint Dockerfiles
+          command: make lint-dockerfiles
+      - run:
+          name: Lint JavaSscript
+          command: make lint-js
 
   build_and_push:
     <<: *defaults
@@ -40,7 +46,7 @@ workflows:
 
   tests:
     jobs:
-      - tests
+      - test_and_lint
 
   build_and_push:
     jobs:
