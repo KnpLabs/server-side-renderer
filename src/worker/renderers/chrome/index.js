@@ -32,6 +32,8 @@ export default (configuration, logger) => async url => {
       `An error occurred while rendering the url "${url}".`,
       formatException(error),
     )
+
+    throw error
   } finally {
     browserProvider.cleanup()
   }
