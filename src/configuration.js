@@ -76,6 +76,9 @@ const generate = () => ({
   },
   queue: {
     redis_dsn: process.env.QUEUE_REDIS_DSN,
+    job: {
+      timeout: Number(process.env.QUEUE_JOB_TIMEOUT ?? 30000),
+    },
   },
   manager: {
     enabled: 1 === Number(process.env.MANAGER_ENABLED ?? 1),
