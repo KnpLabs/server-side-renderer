@@ -1,8 +1,8 @@
 import { call, complement, compose, ifElse, isNil, path, pipe } from 'ramda'
 import { DEFAULT_JOB_OPTIONS } from '../../../queue'
 
-// default :: (Logger, Queue, RequestRegistry) -> Express.app -> Express.app
-export default (logger, queue, requestRegistry) => app =>
+// default :: (Configuration, Logger, Queue, RequestRegistry) -> Express.app -> Express.app
+export default (configuration, logger, queue, requestRegistry) => app =>
   app.get('/render', (req, res, next) => call(pipe(
     () => logger.info(`Render request for url "${req.query.url}" started.`),
     ifElse(
@@ -13,6 +13,7 @@ export default (logger, queue, requestRegistry) => app =>
           url: req.query.url,
         }, {
           ...DEFAULT_JOB_OPTIONS,
+          timeout: configuration.queue.job.timeout,
           jobId,
         }),
       ),
