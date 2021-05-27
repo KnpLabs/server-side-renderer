@@ -1,4 +1,4 @@
-import { T, anyPass, complement, cond, equals, find, ifElse, isNil, pipe, propEq, test } from 'ramda'
+import { T, anyPass, complement, cond, equals, find, ifElse, isNil, pipe, replace, tap, test } from 'ramda'
 
 // resolveRequestDomain :: Request -> String
 const resolveRequestDomain = req => req.url().match(/^(https?:\/\/)?(?<host>[^/]+)/).groups.host
@@ -29,19 +29,23 @@ const isRequestResourceAuthorized = authorizedRequestResources => pipe(
   complement(isNil),
 )
 
-// getDomainRedirection :: [Object] -> Request -> Object|Null
-const getDomainRedirection = domainRedirections => domain => find(propEq('from', domain), domainRedirections)
+// getRedirection :: [Object] -> Request -> Object|Null
+const getRedirection = redirections => req => find(
+  ({ from }) => test(new RegExp(`^${from}`, 'i'), req.url()),
+  redirections,
+)
 
-// allowRequest :: Request -> _
-const allowRequest = domainRedirections => req => pipe(
-  resolveRequestDomain,
-  getDomainRedirection(domainRedirections),
+// allowRequest :: (logger, [Object]) -> Request -> _
+const allowRequest = (logger, redirections) => req => pipe(
+  getRedirection(redirections),
   ifElse(
     isNil,
     () => req.continue(),
-    ({ from, to }) => req.continue({
-      url: req.url().replace(from, to),
-    }),
+    pipe(
+      ({ from, to }) => replace(new RegExp(`^${from}`, 'i'), to, req.url()),
+      tap(redirectedUrl => logger.debug(`Redirecting "${req.url()}" to ${redirectedUrl}`)),
+      redirectedUrl => req.continue({ url: redirectedUrl }),
+    ),
   ),
 )(req)
 
@@ -58,5 +62,5 @@ export default (configuration, logger) => cond([
     complement(isRequestResourceAuthorized(configuration.worker.renderer.authorized_request_resources)),
     blockRequest(logger, 'resource type'),
   ],
-  [T, allowRequest(configuration.worker.renderer.domain_redirections)],
+  [T, allowRequest(logger, configuration.worker.renderer.redirections)],
 ])
