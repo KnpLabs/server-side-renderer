@@ -12,6 +12,7 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
   page.on('error', error => logger.error(formatException(error)))
   page.on('pageerror', error => logger.error(formatException(error)))
   page.on('requestfailed', req => logger.debug(`Browser request failed. ${req.url()}.`))
+  page.on('console', msg => logger.debug(msg.args()))
 
   await page.goto(url, {
     waitUntil: 'networkidle0',
