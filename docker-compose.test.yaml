@@ -24,7 +24,7 @@ services:
       - MANAGER_ENABLED=0
       - WORKER_ENABLED=1
       - QUEUE_REDIS_DSN=redis://redis:6379
-      - WORKER_RENDERER_REDIRECTED_DOMAINS=external-nginx|nginx
+      - WORKER_RENDERER_REDIRECTIONS=http://external-nginx|http://nginx
 
   redis:
     image: redis:6.2.2-buster

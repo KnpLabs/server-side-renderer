@@ -41,7 +41,7 @@ describe('configuration :: createConfiguration', () => {
           authorized_request_resources: [
             '*',
           ],
-          domain_redirections: [],
+          redirections: [],
         },
       },
     })
@@ -77,7 +77,7 @@ describe('configuration :: createConfiguration', () => {
           authorized_request_resources: [
             '*',
           ],
-          domain_redirections: [],
+          redirections: [],
         },
       },
     })
@@ -113,7 +113,7 @@ describe('configuration :: createConfiguration', () => {
           authorized_request_resources: [
             '*',
           ],
-          domain_redirections: [],
+          redirections: [],
         },
       },
     })
@@ -129,7 +129,7 @@ describe('configuration :: createConfiguration', () => {
     process.env.WORKER_ENABLED = 1
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS = 'localhost, nginx'
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_RESOURCES = 'document, script'
-    process.env.WORKER_RENDERER_REDIRECTED_DOMAINS = 'example.com|nginx'
+    process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|http://nginx'
 
     expect(createConfiguration()).toStrictEqual({
       log: {
@@ -159,9 +159,9 @@ describe('configuration :: createConfiguration', () => {
             'document',
             'script',
           ],
-          domain_redirections: [{
-            from: 'example.com',
-            to: 'nginx',
+          redirections: [{
+            from: 'http://example.com',
+            to: 'http://nginx',
           }],
         },
       },
@@ -181,7 +181,7 @@ describe('configuration :: createConfiguration', () => {
 
   it(`throws an exception when the worker configuration is invalid`, () => {
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
-    process.env.WORKER_RENDERER_REDIRECTED_DOMAINS = 'example.com|'
+    process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|'
 
     expect(() => createConfiguration()).toThrow('Invalid configuration.')
   })

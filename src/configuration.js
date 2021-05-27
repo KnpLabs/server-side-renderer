@@ -35,7 +35,7 @@ const isManagerConfigurationValid = T
 
 // isWorkerConfigurationValid :: Configuration -> Boolean
 const isWorkerConfigurationValid = pipe(
-  path(['worker', 'renderer', 'domain_redirections']),
+  path(['worker', 'renderer', 'redirections']),
   reduce(
     (acc, { from, to }) => unless(
       equals(false),
@@ -96,11 +96,11 @@ const generate = () => ({
       authorized_request_resources: commaSeparatedStringToArray(
         process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_RESOURCES ?? '*',
       ),
-      domain_redirections: pipe(
+      redirections: pipe(
         commaSeparatedStringToArray,
         map(pipeSeparatedStringToArray),
         map(([from, to]) => ({ from, to })),
-      )(process.env.WORKER_RENDERER_REDIRECTED_DOMAINS ?? ''),
+      )(process.env.WORKER_RENDERER_REDIRECTIONS ?? ''),
     },
   },
 })
