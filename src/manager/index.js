@@ -1,12 +1,10 @@
-import { T, always, call, cond, juxt, pipe, tap, when } from 'ramda'
-import TimeoutError from '../error/TimeoutError'
-import { TimeoutError as PuppeteerTimeoutError } from 'puppeteer-core'
+import { T, always, call, cond, juxt, pipe, tap, test, when } from 'ramda'
 import createRequestRegistry from './requestRegistry'
 import initHttpServer from './http-server'
 
 const resolveStatusCodeFromError = cond([
-  [error => error instanceof TimeoutError, always(504)],
-  [error => error instanceof PuppeteerTimeoutError, always(504)],
+  [error => test(/timeout/i, error), always(504)],
+  [error => test(/timed out/i, error), always(504)],
   [T, always(500)],
 ])
 
@@ -23,7 +21,10 @@ const onJobCompleted = (logger, requestRegistry) => (jobId, result) => when(
 const onJobFailed = (logger, requestRegistry) => (jobId, error) => when(
   jobId => requestRegistry.has(jobId),
   juxt([
-    jobId => requestRegistry.fail(jobId, resolveStatusCodeFromError(error)),
+    jobId => requestRegistry.fail(
+      jobId,
+      resolveStatusCodeFromError(error),
+    ),
     jobId => logger.error(`Job "${jobId}" has failed. ${error}.`),
   ]),
 )(jobId)
