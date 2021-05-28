@@ -4,7 +4,7 @@ import { DEFAULT_JOB_OPTIONS } from '../../../queue'
 // default :: (Configuration, Logger, Queue, RequestRegistry) -> Express.app -> Express.app
 export default (configuration, logger, queue, requestRegistry) => app =>
   app.get('/render', (req, res, next) => call(pipe(
-    () => logger.info(`Render request for url "${req.query.url}" started.`),
+    () => logger.debug(`Render request for url "${req.query.url}" started.`),
     ifElse(
       () => compose(complement(isNil), path(['query', 'url']))(req),
       pipe(

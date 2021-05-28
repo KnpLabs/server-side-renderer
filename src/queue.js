@@ -8,8 +8,6 @@ export const DEFAULT_QUEUE_OPTIONS = {}
 
 export const DEFAULT_JOB_OPTIONS = {
   attempts: 1,
-  removeOnComplete: true,
-  removeOnFail: true,
 }
 
 // createQueue :: (String, Object) -> Queue

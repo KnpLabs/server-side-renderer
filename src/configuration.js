@@ -77,8 +77,8 @@ const generate = () => ({
   queue: {
     redis_dsn: process.env.QUEUE_REDIS_DSN,
     job: {
-      stale_timeout: Number(process.env.QUEUE_JOB_STALE_TIMEOUT ?? 2000),
-      timeout: Number(process.env.QUEUE_JOB_TIMEOUT ?? 6000),
+      stale_timeout: Number(process.env.QUEUE_JOB_STALE_TIMEOUT ?? 10000),
+      timeout: Number(process.env.QUEUE_JOB_TIMEOUT ?? 30000),
     },
   },
   manager: {
@@ -91,7 +91,7 @@ const generate = () => ({
   worker: {
     enabled: 1 === Number(process.env.WORKER_ENABLED ?? 1),
     renderer: {
-      timeout: Number(process.env.WORKER_RENDERER_TIMEOUT ?? 5000),
+      timeout: Number(process.env.WORKER_RENDERER_TIMEOUT ?? 20000),
       authorized_request_domains: commaSeparatedStringToArray(
         process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS ?? '*',
       ),

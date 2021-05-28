@@ -8,6 +8,6 @@ export default (configuration, logger, queue, requestRegistry) => pipe(
   app => app.listen(
     configuration.manager.http_server.port,
     configuration.manager.http_server.host,
-    () => logger.info('Manager http server started.'),
+    () => logger.debug('Manager http server started.'),
   ),
 )(express())
