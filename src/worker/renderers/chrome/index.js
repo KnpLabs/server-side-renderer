@@ -21,7 +21,7 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
 
   await page.goto(url, {
     waitUntil: 'networkidle0',
-    timeout: configuration.queue.job.timeout,
+    timeout: configuration.worker.renderer.timeout,
   })
 
   return await page.content()

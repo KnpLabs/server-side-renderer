@@ -26,16 +26,16 @@ export default () => ({
     return id
   },
 
-  complete: function (id, result) {
+  complete: function (id, result, status = 200) {
     if (this.has(id)) {
-      this._requests[id].res.send(result)
+      this._requests[id].res.status(status).send(result)
       delete this._requests[id]
     }
   },
 
-  fail: function (id) {
+  fail: function (id, status = 500) {
     if (this.has(id)) {
-      this._requests[id].res.status(500).end()
+      this._requests[id].res.status(status).end()
       delete this._requests[id]
     }
   },

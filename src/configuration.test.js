@@ -29,12 +29,14 @@ describe('configuration :: createConfiguration', () => {
       queue: {
         redis_dsn: 'redis://redis:6379',
         job: {
-          timeout: 30000,
+          stale_timeout: 2000,
+          timeout: 6000,
         },
       },
       worker: {
         enabled: true,
         renderer: {
+          timeout: 5000,
           authorized_request_domains: [
             '*',
           ],
@@ -65,12 +67,14 @@ describe('configuration :: createConfiguration', () => {
       queue: {
         redis_dsn: 'redis://redis:6379',
         job: {
-          timeout: 30000,
+          stale_timeout: 2000,
+          timeout: 6000,
         },
       },
       worker: {
         enabled: true,
         renderer: {
+          timeout: 5000,
           authorized_request_domains: [
             '*',
           ],
@@ -101,12 +105,14 @@ describe('configuration :: createConfiguration', () => {
       queue: {
         redis_dsn: 'redis://redis:6379',
         job: {
-          timeout: 30000,
+          stale_timeout: 2000,
+          timeout: 6000,
         },
       },
       worker: {
         enabled: false,
         renderer: {
+          timeout: 5000,
           authorized_request_domains: [
             '*',
           ],
@@ -122,11 +128,13 @@ describe('configuration :: createConfiguration', () => {
   it(`creates a configuration`, () => {
     process.env.LOG_LEVEL = 'ERROR'
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
-    process.env.QUEUE_JOB_TIMEOUT = 5000
+    process.env.QUEUE_JOB_STALE_TIMEOUT = 10000
+    process.env.QUEUE_JOB_TIMEOUT = 30000
     process.env.MANAGER_ENABLED = 1
     process.env.MANAGER_HTTP_SERVER_PORT = 8081
     process.env.MANAGER_HTTP_SERVER_HOST = '127.0.0.1'
     process.env.WORKER_ENABLED = 1
+    process.env.WORKER_RENDERER_TIMEOUT = 20000
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS = 'localhost, nginx'
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_RESOURCES = 'document, script'
     process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|http://nginx'
@@ -145,12 +153,14 @@ describe('configuration :: createConfiguration', () => {
       queue: {
         redis_dsn: 'redis://redis:6379',
         job: {
-          timeout: 5000,
+          stale_timeout: 10000,
+          timeout: 30000,
         },
       },
       worker: {
         enabled: true,
         renderer: {
+          timeout: 20000,
           authorized_request_domains: [
             'localhost',
             'nginx',
