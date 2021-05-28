@@ -11,6 +11,7 @@ export default (configuration, logger, queue, requestRegistry) => app =>
         () => requestRegistry.add(req, res, next),
         jobId => queue.add({
           url: req.query.url,
+          queuedAt: (new Date()).getTime(),
         }, {
           ...DEFAULT_JOB_OPTIONS,
           timeout: configuration.queue.job.timeout,
