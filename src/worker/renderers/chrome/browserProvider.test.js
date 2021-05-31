@@ -1,46 +1,47 @@
 import 'regenerator-runtime/runtime' // needed by the SSR to be able to execute transpiled generator functions like async/await
 import getBrowserProvider from './browserProvider'
+import treekill from 'tree-kill'
 import { launch } from 'puppeteer-core'
-import kill from 'tree-kill'
 
 jest.mock('puppeteer-core', () => ({
-    launch: jest.fn(() => Promise.resolve({
-        removeAllListeners: jest.fn(),
-        close: jest.fn(),
-        process: jest.fn(),
-    }))
+  launch: jest.fn(() => Promise.resolve({
+    removeAllListeners: jest.fn(),
+    close: jest.fn(),
+    process: jest.fn(),
+  })),
 }))
 
 jest.mock('tree-kill')
 
 beforeEach(() => {
   launch.mockClear()
-  kill.mockClear()
+  treekill.mockClear()
 })
 
 describe('browserProvider', () => {
   it(`returns a browser instance`, () => {
     const browserProvider = getBrowserProvider()
 
-    expect(browserProvider.getInstance()).resolves.toMatchObject({
+    expect(browserProvider.getInstance()).resolves // eslint-disable-line jest/valid-expect
+      .toMatchObject({
         removeAllListeners: expect.any(Function),
         close: expect.any(Function),
-        process: expect.any(Function)
-    })
+        process: expect.any(Function),
+      })
     expect(launch).toHaveBeenCalledTimes(1)
     expect(launch).toHaveBeenCalledWith({
-        "args": [
-            "--disable-dev-shm-usage",
-            "--disable-gpu",
-            "--disable-setuid-sandbox",
-            "--disable-software-rasterizer",
-            "--headless",
-            "--no-sandbox",
-            "--safebrowsing-disable-auto-update",
-            "--use-gl=disabled"
-        ],
-        "defaultViewport": null,
-        "executablePath": "/usr/bin/google-chrome-stable"
+      'args': [
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--disable-setuid-sandbox',
+        '--disable-software-rasterizer',
+        '--headless',
+        '--no-sandbox',
+        '--safebrowsing-disable-auto-update',
+        '--use-gl=disabled',
+      ],
+      'defaultViewport': null,
+      'executablePath': '/usr/bin/google-chrome-stable',
     })
   })
 
@@ -53,18 +54,18 @@ describe('browserProvider', () => {
 
     expect(launch).toHaveBeenCalledTimes(1)
     expect(launch).toHaveBeenCalledWith({
-        "args": [
-            "--disable-dev-shm-usage",
-            "--disable-gpu",
-            "--disable-setuid-sandbox",
-            "--disable-software-rasterizer",
-            "--headless",
-            "--no-sandbox",
-            "--safebrowsing-disable-auto-update",
-            "--use-gl=disabled"
-        ],
-        "defaultViewport": null,
-        "executablePath": "/usr/bin/google-chrome-stable"
+      'args': [
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--disable-setuid-sandbox',
+        '--disable-software-rasterizer',
+        '--headless',
+        '--no-sandbox',
+        '--safebrowsing-disable-auto-update',
+        '--use-gl=disabled',
+      ],
+      'defaultViewport': null,
+      'executablePath': '/usr/bin/google-chrome-stable',
     })
   })
 
@@ -78,7 +79,7 @@ describe('browserProvider', () => {
     expect(browser.removeAllListeners).toHaveBeenCalledTimes(1)
     expect(browser.close).toHaveBeenCalledTimes(1)
     expect(browser.process).toHaveBeenCalledTimes(1)
-    expect(kill).toHaveBeenCalledTimes(0)
+    expect(treekill).toHaveBeenCalledTimes(0)
   })
 
   it(`forcefully closes the browser instance`, async () => {
@@ -93,6 +94,6 @@ describe('browserProvider', () => {
     expect(browser.removeAllListeners).toHaveBeenCalledTimes(1)
     expect(browser.close).toHaveBeenCalledTimes(1)
     expect(browser.process).toHaveBeenCalledTimes(1)
-    expect(kill).toHaveBeenCalledTimes(1)
+    expect(treekill).toHaveBeenCalledTimes(1)
   })
 })
