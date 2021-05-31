@@ -43,10 +43,12 @@ export default () => ({
     await this._instance.removeAllListeners()
     await this._instance.close()
 
-    if (this.instance) {
-      const process = this._instance.process()
+    if (this._instance) {
+      const browserProcess = this._instance.process()
 
-      await kill(process.pid, 'SIGKILL')
+      if (browserProcess && browserProcess.pid) {
+        await kill(browserProcess.pid, 'SIGKILL')
+      }
     }
 
     this._instance = null
