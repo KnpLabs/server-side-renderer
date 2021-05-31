@@ -17,7 +17,11 @@ stop:
 
 .PHONY: test
 test:
+ifndef CI
 	docker-compose -f docker-compose.${STAGE}.yaml run --rm test yarn test
+else
+	docker-compose -f docker-compose.${STAGE}.yaml run --rm test yarn test-ci
+endif
 
 .PHONY: build
 build: .validate-tag

@@ -28,7 +28,8 @@
     "start-dev": "nodemon --watch src/ --ignore 'src/**/*.test.js' --exec babel-node src/index.js",
     "build": "babel src/ -d build/ --ignore 'src/**/*.test.js'",
     "start": "node build/index.js",
-    "test": "jest",
+    "test": "jest --watchAll",
+    "test-ci": "jest --ci",
     "lint": "eslint \"./src\""
   }
 }
