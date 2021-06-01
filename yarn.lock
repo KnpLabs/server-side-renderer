@@ -1846,10 +1846,10 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-bull@^3.22.6:
-  version "3.22.6"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-3.22.6.tgz#039b5a59689b0b236ca85c9397e76db481cc9b3c"
-  integrity sha512-M7jYiohDP6qhtm+3D+6xDt52u1vdJyqk4EdeZBc39pKJpqLgCtUFuHrTPycvd6TLCqtcW/3kA2Gx70zmKUmWYg==
+bull@^3.22.7:
+  version "3.22.7"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-3.22.7.tgz#be17398edad4e17e54db9b9c7388d92381f6ea1d"
+  integrity sha512-hrpfs1InzliuevKUOxAfGVctViic8uKP5zOkFAeNI4yVhlR5Ai3pSXFBiC78p2dl/t2AlC504pOqYJw3W9eSSA==
   dependencies:
     cron-parser "^2.13.0"
     debuglog "^1.0.0"
