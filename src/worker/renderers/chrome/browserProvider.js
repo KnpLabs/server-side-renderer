@@ -1,4 +1,4 @@
-import kill from 'tree-kill'
+import treekill from 'tree-kill'
 import puppeteer from 'puppeteer-core'
 
 /**
@@ -21,8 +21,9 @@ const BROWSER_ARGS = [
   '--use-gl=disabled',
 ]
 
-// getBrowserProvider :: _ -> BrowserProvider
-export default () => ({
+// getBrowserProvider :: Logger -> BrowserProvider
+export default logger => ({
+  _logger: logger,
   _instance: null,
 
   getInstance: async function () {
@@ -40,15 +41,21 @@ export default () => ({
   },
 
   cleanup: async function () {
-    await this._instance.removeAllListeners()
-    await this._instance.close()
+    try {
+      await this._instance.close()
+      await this._instance.removeAllListeners()
+    } catch (error) {
+      this._logger.error(`An error occurred while closing the browser. ${error.message}`)
+    } finally {
+      if (this._instance) {
+        const browserProcess = this._instance.process()
 
-    if (this.instance) {
-      const process = this._instance.process()
+        if (browserProcess && browserProcess.pid) {
+          await treekill(browserProcess.pid, 'SIGKILL')
+        }
+      }
 
-      await kill(process.pid, 'SIGKILL')
+      this._instance = null
     }
-
-    this._instance = null
   },
 })
