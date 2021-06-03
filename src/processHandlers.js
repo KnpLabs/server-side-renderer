@@ -2,7 +2,7 @@ import { call, pipe } from 'ramda'
 import { formatException } from './logger'
 
 // onUncaughtException :: Logger -> Error -> void
-export const onUncaughtException = logger => pipe(
+const onUncaughtException = logger => pipe(
   error => logger.error(
     'An exception has been thrown but not properly caught. Exiting...',
     formatException(error),
@@ -15,7 +15,7 @@ const setUpUncaughtExceptionHandler = logger =>
   process.on('uncaughtException', onUncaughtException(logger))
 
 // onUnhandledRejection :: Logger -> Error -> void
-export const onUnhandledRejection = logger => error =>
+const onUnhandledRejection = logger => error =>
   logger.error(
     'A promise has been rejected without being properly handled.',
     formatException(error),
@@ -32,7 +32,7 @@ const performGracefulShutdown = logger => call(pipe(
 ))
 
 // onTerminationSignal :: Logger-> void
-export const onTerminationSignal = (logger, signal) => pipe(
+const onTerminationSignal = (logger, signal) => pipe(
   () => logger.info(`${signal} received.`),
   () => performGracefulShutdown(logger),
 )
