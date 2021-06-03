@@ -8,7 +8,7 @@ const requestMock = {
   abort: jest.fn(),
   continue: jest.fn(),
   resourceType: () => 'xhr',
-  url: () => 'http://api.i24news.tv/v2/en/contents',
+  url: () => 'https://www.example.com/dynamic.json',
 }
 
 beforeEach(() => {
@@ -42,8 +42,8 @@ describe('browserRequestHandler', () => {
           authorized_request_domains: ['*'],
           authorized_request_resources: ['*'],
           redirections: [{
-            from: 'http://api.i24news.tv',
-            to: 'http://api',
+            from: 'https://www.example.com',
+            to: 'http://nginx',
           }],
         },
       },
@@ -54,7 +54,7 @@ describe('browserRequestHandler', () => {
     expect(requestMock.abort).toHaveBeenCalledTimes(0)
     expect(requestMock.continue).toHaveBeenCalledTimes(1)
     expect(requestMock.continue).toHaveBeenCalledWith({
-      url: 'http://api/v2/en/contents',
+      url: 'http://nginx/dynamic.json',
     })
   })
 
@@ -62,7 +62,7 @@ describe('browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['www.i24news.tv'],
+          authorized_request_domains: ['another-service.example.com'],
           authorized_request_resources: ['*'],
           redirections: [],
         },
@@ -79,7 +79,7 @@ describe('browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['i24news.tv'],
+          authorized_request_domains: ['example.com'],
           authorized_request_resources: ['*'],
           redirections: [],
         },
@@ -97,7 +97,7 @@ describe('browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['backend.i24news.tv', 'api.i24news.tv', 'www.i24news.tv'],
+          authorized_request_domains: ['another-service.example.com', 'www.example.com'],
           authorized_request_resources: ['*'],
           redirections: [],
         },
@@ -150,7 +150,7 @@ describe('browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['i24news.tv'],
+          authorized_request_domains: ['example.com'],
           authorized_request_resources: ['document'],
           redirections: [],
         },
@@ -167,7 +167,7 @@ describe('browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['www.i24news.tv'],
+          authorized_request_domains: ['another-service.example.com'],
           authorized_request_resources: ['xhr'],
           redirections: [],
         },

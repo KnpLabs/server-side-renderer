@@ -44,7 +44,7 @@ describe('renderer', () => {
       cleanup: browserCleanupMock,
     }))
 
-    expect(await render(configuration, {})('https://www.i24news.tv')).toBe('My page content')
+    expect(await render(configuration, {})('https://nginx/dynamic.html')).toBe('My page content')
     expect(pageMock.setRequestInterception).toHaveBeenCalledTimes(1)
     expect(pageMock.setRequestInterception).toHaveBeenCalledWith(true)
     expect(pageMock.on).toHaveBeenCalledTimes(5)
@@ -54,7 +54,7 @@ describe('renderer', () => {
     expect(pageMock.on).toHaveBeenNthCalledWith(4, 'requestfailed', expect.any(Function))
     expect(pageMock.on).toHaveBeenNthCalledWith(5, 'console', expect.any(Function))
     expect(pageMock.goto).toHaveBeenCalledTimes(1)
-    expect(pageMock.goto).toHaveBeenCalledWith('https://www.i24news.tv', {
+    expect(pageMock.goto).toHaveBeenCalledWith('https://nginx/dynamic.html', {
       waitUntil: 'networkidle0',
       timeout: 20000,
     })
@@ -90,7 +90,7 @@ describe('renderer', () => {
       cleanup: browserCleanupMock,
     }))
 
-    await expect(render(configuration, loggerMock)('https://www.i24news.tv')).rejects.toEqual(new Error('My error'))
+    await expect(render(configuration, loggerMock)('https://nginx/dynamic.html')).rejects.toEqual(new Error('My error'))
     expect(browserCleanupMock).toHaveBeenCalledTimes(1)
   })
 })
