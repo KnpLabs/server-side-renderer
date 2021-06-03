@@ -7,7 +7,7 @@ beforeEach(() => {
   Bull.mockClear()
 })
 
-describe('queue :: createQueue', () => {
+describe('queue', () => {
   it(`creates a queue with default options`, () => {
     const queueMock = { add: () => {}, process: () => {} }
     Bull.mockResolvedValue(queueMock)

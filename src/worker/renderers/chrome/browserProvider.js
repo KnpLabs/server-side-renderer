@@ -1,5 +1,5 @@
-import treekill from 'tree-kill'
 import puppeteer from 'puppeteer-core'
+import treekill from 'tree-kill'
 
 /**
  * @type BrowserProvider = {

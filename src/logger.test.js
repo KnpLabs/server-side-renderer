@@ -1,6 +1,6 @@
 import { LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO, LEVEL_WARN, default as createLogger } from './logger'
 
-describe('logger :: createLogger', () => {
+describe('logger', () => {
   it(`creates a logger with DEBUG level`, () => {
     const debugMock = jest.fn()
     const infoMock = jest.fn()

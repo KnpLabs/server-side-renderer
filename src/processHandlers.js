@@ -1,5 +1,5 @@
-import { call, pipe } from 'ramda'
 import { formatException } from './logger'
+import { pipe } from 'ramda'
 
 // onUncaughtException :: Logger -> Error -> void
 const onUncaughtException = logger => pipe(
@@ -25,35 +25,37 @@ const onUnhandledRejection = logger => error =>
 const setUpUnhandledRejectionHandler = logger =>
   process.on('unhandledRejection', onUnhandledRejection(logger))
 
-// performGracefulShutdown :: Logger -> void
-const performGracefulShutdown = logger => call(pipe(
-  () => logger.info(`Graceful shutdown started.`),
-  () => process.exit(0),
-))
+// performGracefulShutdown :: (Logger, Function) -> void
+const performGracefulShutdown = async (logger, shutdownFunction) => {
+  logger.info(`Graceful shutdown started.`)
 
-// onTerminationSignal :: Logger-> void
-const onTerminationSignal = (logger, signal) => pipe(
+  await shutdownFunction()
+  process.exit(0)
+}
+
+// onTerminationSignal :: (Logger, Function, String) -> void
+export const onTerminationSignal = (logger, shutdownFunction, signal) => pipe(
   () => logger.info(`${signal} received.`),
-  () => performGracefulShutdown(logger),
+  () => performGracefulShutdown(logger, shutdownFunction),
 )
 
-// setUpOnSIGINTHandler :: Logger -> void
+// setUpOnSIGINTHandler :: (Logger, Function) -> void
 // SIGINT signal is sent if you run the application from your terminal and you
 // hit ctrl+c
-const setUpOnSIGINTHandler = logger =>
-  process.on('SIGINT', onTerminationSignal(logger, 'SIGINT'))
+const setUpOnSIGINTHandler = (logger, shutdownFunction) =>
+  process.on('SIGINT', onTerminationSignal(logger, shutdownFunction, 'SIGINT'))
 
-// setUpOnSIGTERMHandler :: Logger-> void
+// setUpOnSIGTERMHandler :: (Logger, Function) -> void
 // SIGTERM signal is sent by Docker when the container has been requested to
 // stop (stop, upgrade, etc...). If after x seconds the container doesn't stop
 // a SIGKILL signal is sent and the container immediately stop.
-const setUpOnSIGTERMHandler = logger =>
-  process.on('SIGTERM', onTerminationSignal(logger, 'SIGTERM'))
+const setUpOnSIGTERMHandler = (logger, shutdownFunction) =>
+  process.on('SIGTERM', onTerminationSignal(logger, shutdownFunction, 'SIGTERM'))
 
-// setupProcessHandlers :: Logger -> void
-export default logger => {
+// setupProcessHandlers :: (Logger, Function) -> void
+export default (logger, shutdownFunction) => {
   setUpUncaughtExceptionHandler(logger)
   setUpUnhandledRejectionHandler(logger)
-  setUpOnSIGINTHandler(logger)
-  setUpOnSIGTERMHandler(logger)
+  setUpOnSIGINTHandler(logger, shutdownFunction)
+  setUpOnSIGTERMHandler(logger, shutdownFunction)
 }
