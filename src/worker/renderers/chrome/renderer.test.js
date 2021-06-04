@@ -1,7 +1,7 @@
-import 'regenerator-runtime/runtime' // needed by the SSR to be able to execute transpiled generator functions like async/await
-import render from './renderer'
+import 'regenerator-runtime/runtime' // needed to be able to execute transpiled generator functions like async/await
 import browserRequestHandler from './browserRequestHandler'
 import getBrowserProvider from './browserProvider'
+import render from './renderer'
 
 jest.mock('./browserRequestHandler', () => jest.fn().mockImplementation(() => () => {}))
 jest.mock('./browserProvider')
@@ -11,7 +11,7 @@ beforeEach(() => {
   getBrowserProvider.mockClear()
 })
 
-describe('renderer', () => {
+describe('worker :: renderer', () => {
   it(`renders a page`, async () => {
     const configuration = {
       worker: {

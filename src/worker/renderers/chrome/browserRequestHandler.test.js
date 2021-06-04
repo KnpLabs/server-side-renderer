@@ -16,7 +16,7 @@ beforeEach(() => {
   requestMock.continue.mockClear()
 })
 
-describe('browserRequestHandler', () => {
+describe('worker :: renderer :: browserRequestHandler', () => {
   it(`allows a request`, () => {
     const configuration = {
       worker: {

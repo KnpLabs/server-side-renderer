@@ -1,7 +1,7 @@
-import 'regenerator-runtime/runtime' // needed by the SSR to be able to execute transpiled generator functions like async/await
+import 'regenerator-runtime/runtime' // needed to be able to execute transpiled generator functions like async/await
 import getBrowserProvider from './browserProvider'
-import treekill from 'tree-kill'
 import { launch } from 'puppeteer-core'
+import treekill from 'tree-kill'
 
 jest.mock('puppeteer-core', () => ({
   launch: jest.fn(() => Promise.resolve({
@@ -18,12 +18,12 @@ beforeEach(() => {
   treekill.mockClear()
 })
 
-describe('browserProvider', () => {
+describe('worker :: renderer :: browserProvider', () => {
   it(`returns a browser instance`, () => {
     const browserProvider = getBrowserProvider()
 
-    expect(browserProvider.getInstance()).resolves // eslint-disable-line jest/valid-expect
-      .toMatchObject({
+    expect(browserProvider.getInstance()) // eslint-disable-line jest/valid-expect
+      .resolves.toMatchObject({
         removeAllListeners: expect.any(Function),
         close: expect.any(Function),
         process: expect.any(Function),

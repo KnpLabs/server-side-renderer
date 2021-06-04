@@ -1,6 +1,6 @@
 import createRequestRegistry from './requestRegistry'
 
-describe('requestRegistry', () => {
+describe('manager :: requestRegistry', () => {
   it(`returns false when the request's id is not present in the registry`, () => {
     const requestRegistry = createRequestRegistry()
     requestRegistry.add({}, {}, {})

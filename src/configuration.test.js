@@ -11,7 +11,7 @@ afterAll(() => {
   process.env = ORIGINAL_ENV // Restore old environment
 })
 
-describe('configuration :: createConfiguration', () => {
+describe('configuration', () => {
   it(`creates a configuration with default values`, () => {
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
 
