@@ -24,7 +24,7 @@ jobs:
           name: Lint Dockerfiles
           command: make lint-dockerfiles
       - run:
-          name: Lint JavaSscript
+          name: Lint JavaScript
           command: make lint-js
 
   build_and_push:

@@ -3,7 +3,7 @@ FROM node:14.17.0-slim as dev
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
 # installs, work.
-# hadolint ignore=DL4006
+# hadolint ignore=DL4006,DL3015
 RUN apt-get update \
     && apt-get install -y \
       wget=1.18-5+deb9u3 \
@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y \
       procps=2:3.3.12-3+deb9u1 \
-      google-chrome-stable=91.0.4472.77-1 \
+      google-chrome-stable=91.0.4472.101-1 \
       fonts-ipafont-gothic=00303-16 \
       fonts-wqy-zenhei=0.9.45-6 \
       fonts-thai-tlwg=1:0.6.3-1 \
