@@ -79,7 +79,7 @@ describe('worker :: renderer :: browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['example.com'],
+          authorized_request_domains: ['*.example.com'],
           authorized_request_resources: ['*'],
           redirections: [],
         },
@@ -150,7 +150,7 @@ describe('worker :: renderer :: browserRequestHandler', () => {
     const configuration = {
       worker: {
         renderer: {
-          authorized_request_domains: ['example.com'],
+          authorized_request_domains: ['*.example.com'],
           authorized_request_resources: ['document'],
           redirections: [],
         },
