@@ -4,10 +4,8 @@ import { T, anyPass, complement, cond, equals, find, ifElse, isNil, pipe, replac
 const resolveRequestDomain = req => req.url().match(/^(https?:\/\/)?(?<host>[^/]+)/).groups.host
 
 // isMatchingDomain :: String -> String -> Boolean
-const isMatchingDomain = input => anyPass([
-  equals('*'),
-  value => test(new RegExp(`${value}$`, 'i'), input),
-])
+const isMatchingDomain = input => value =>
+  test(new RegExp(`^${replace('*', '.*', value)}$`, 'i'), input)
 
 // isRequestDomainAuthorized :: [String] -> Request -> Boolean
 const isRequestDomainAuthorized = authorizedRequestDomains => pipe(
