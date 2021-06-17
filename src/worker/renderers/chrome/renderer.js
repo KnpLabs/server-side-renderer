@@ -1,7 +1,7 @@
-import { apply, map, pipe } from 'ramda'
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
 import getBrowserProvider from './browserProvider'
+import { reduce } from 'ramda'
 
 // renderPageContent :: (Configuration, Logger, BrowserInstance, String) -> RenderedPage
 const renderPageContent = async (configuration, logger, browserInstance, url) => {
@@ -12,12 +12,22 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
   page.on('request', browserRequestHandler(configuration, logger))
   page.on('error', error => logger.error(formatException(error)))
   page.on('pageerror', error => logger.error(formatException(error)))
-  page.on('requestfailed', req => logger.debug(`Browser request failed. ${req.url()}.`))
-  page.on('console', pipe(
-    msg => msg.args(),
-    map(arg => arg.toString()),
-    apply(logger.debug),
-  ))
+  page.on('requestfailed', req => logger.debug(`Browser request failed. ${req.url()}. ${req.failure().errorText}`))
+  // See https://github.com/puppeteer/puppeteer/issues/3397#issuecomment-434970058
+  page.on('console', async msg => {
+    const args = await Promise.all(msg.args().map(
+      jsHandle => jsHandle.executionContext().evaluate(arg => {
+        if (arg instanceof Error) {
+          return arg.message
+        }
+
+        return arg
+      }),
+    ))
+    const text = reduce((acc, cur) => acc += acc !== '' ? `, ${cur}` : cur, '', args)
+
+    logger.debug(`CONSOLE.${msg.type()}: ${msg.text()}\n${text}`)
+  })
 
   await page.goto(url, {
     waitUntil: 'networkidle0',
