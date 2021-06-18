@@ -44,6 +44,18 @@ describe('configuration', () => {
             '*',
           ],
           redirections: [],
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
         },
       },
     })
@@ -82,6 +94,18 @@ describe('configuration', () => {
             '*',
           ],
           redirections: [],
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
         },
       },
     })
@@ -120,6 +144,18 @@ describe('configuration', () => {
             '*',
           ],
           redirections: [],
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
         },
       },
     })
@@ -138,6 +174,7 @@ describe('configuration', () => {
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_DOMAINS = 'localhost, nginx'
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_RESOURCES = 'document, script'
     process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|http://nginx'
+    process.env.WORKER_RENDERER_CHROME_OPTIONS = '--disable-dev-shm-usage,--disable-gpu'
 
     expect(createConfiguration()).toStrictEqual({
       log: {
@@ -173,6 +210,12 @@ describe('configuration', () => {
             from: 'http://example.com',
             to: 'http://nginx',
           }],
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+            ],
+          },
         },
       },
     })

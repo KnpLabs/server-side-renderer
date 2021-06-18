@@ -39,7 +39,7 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
 
 // render :: (Configuration, Logger) -> String
 export default (configuration, logger) => async url => {
-  const browserProvider = getBrowserProvider(logger)
+  const browserProvider = getBrowserProvider(configuration, logger)
   const browserInstance = await browserProvider.getInstance()
 
   try {

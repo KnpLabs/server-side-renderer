@@ -10,19 +10,8 @@ import treekill from 'tree-kill'
  * @type BrowserInstance = Puppeteer.Browser
  */
 
-const BROWSER_ARGS = [
-  '--disable-dev-shm-usage',
-  '--disable-gpu',
-  '--disable-setuid-sandbox',
-  '--disable-software-rasterizer',
-  '--headless',
-  '--no-sandbox',
-  '--safebrowsing-disable-auto-update',
-  '--use-gl=disabled',
-]
-
-// getBrowserProvider :: Logger -> BrowserProvider
-export default logger => ({
+// getBrowserProvider :: (Configuration, Logger) -> BrowserProvider
+export default (configuration, logger) => ({
   _logger: logger,
   _instance: null,
 
@@ -31,7 +20,7 @@ export default logger => ({
       this._instance = await puppeteer.launch({
         // See https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions for available options
         // See https://peter.sh/experiments/chromium-command-line-switches for available args
-        args: BROWSER_ARGS,
+        args: configuration.worker.renderer.chrome.options,
         executablePath: '/usr/bin/google-chrome-stable',
         defaultViewport: null,
       })

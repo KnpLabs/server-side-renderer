@@ -12,6 +12,7 @@ import {
   includes,
   isEmpty,
   isNil,
+  join,
   map,
   path,
   pipe,
@@ -20,6 +21,17 @@ import {
   trim,
   unless,
 } from 'ramda'
+
+const DEFAULT_WORKER_RENDERER_CHROME_OPTIONS = [
+  '--disable-dev-shm-usage',
+  '--disable-gpu',
+  '--disable-setuid-sandbox',
+  '--disable-software-rasterizer',
+  '--headless',
+  '--no-sandbox',
+  '--safebrowsing-disable-auto-update',
+  '--use-gl=disabled',
+]
 
 // isDefined :: Mixed -> Boolean
 const isDefined = both(complement(isNil), complement(isEmpty))
@@ -103,6 +115,12 @@ const generate = () => ({
         map(pipeSeparatedStringToArray),
         map(([from, to]) => ({ from, to })),
       )(process.env.WORKER_RENDERER_REDIRECTIONS ?? ''),
+      chrome: {
+        options: commaSeparatedStringToArray(
+          process.env.WORKER_RENDERER_CHROME_OPTIONS
+          ?? join(',', DEFAULT_WORKER_RENDERER_CHROME_OPTIONS),
+        ),
+      },
     },
   },
 })
