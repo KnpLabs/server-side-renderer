@@ -20,7 +20,25 @@ beforeEach(() => {
 
 describe('worker :: renderer :: browserProvider', () => {
   it(`returns a browser instance`, () => {
-    const browserProvider = getBrowserProvider()
+    const configuration = {
+      worker: {
+        renderer: {
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
+        },
+      },
+    }
+    const browserProvider = getBrowserProvider(configuration)
 
     expect(browserProvider.getInstance()) // eslint-disable-line jest/valid-expect
       .resolves.toMatchObject({
@@ -46,7 +64,25 @@ describe('worker :: renderer :: browserProvider', () => {
   })
 
   it(`returns the same browser instance when called multiple times`, async () => {
-    const browserProvider = getBrowserProvider()
+    const configuration = {
+      worker: {
+        renderer: {
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
+        },
+      },
+    }
+    const browserProvider = getBrowserProvider(configuration)
 
     await browserProvider.getInstance()
     await browserProvider.getInstance()
@@ -70,7 +106,25 @@ describe('worker :: renderer :: browserProvider', () => {
   })
 
   it(`closes the browser instance`, async () => {
-    const browserProvider = getBrowserProvider()
+    const configuration = {
+      worker: {
+        renderer: {
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
+        },
+      },
+    }
+    const browserProvider = getBrowserProvider(configuration)
 
     const browser = await browserProvider.getInstance()
     await browserProvider.cleanup()
@@ -83,7 +137,25 @@ describe('worker :: renderer :: browserProvider', () => {
   })
 
   it(`forcefully closes the browser instance`, async () => {
-    const browserProvider = getBrowserProvider()
+    const configuration = {
+      worker: {
+        renderer: {
+          chrome: {
+            options: [
+              '--disable-dev-shm-usage',
+              '--disable-gpu',
+              '--disable-setuid-sandbox',
+              '--disable-software-rasterizer',
+              '--headless',
+              '--no-sandbox',
+              '--safebrowsing-disable-auto-update',
+              '--use-gl=disabled',
+            ],
+          },
+        },
+      },
+    }
+    const browserProvider = getBrowserProvider(configuration)
 
     const browser = await browserProvider.getInstance()
     browser.process.mockReturnValueOnce({ pid: 10 })
