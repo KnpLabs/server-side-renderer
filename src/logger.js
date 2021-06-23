@@ -1,4 +1,4 @@
-import { F, always, bind, equals, findIndex, gte, ifElse, partial, pickAll } from 'ramda'
+import { F, always, equals, findIndex, gte, ifElse, pickAll } from 'ramda'
 
 /**
  * @type Logger = {
@@ -36,40 +36,28 @@ const loggerHead = type => `[${(new Date()).toISOString()}] ${type.toUpperCase()
 // error :: (String, Output) -> Function
 const error = (level, output) => ifElse(
   level => shouldPrintLog(level, LEVEL_ERROR),
-  () => partial(
-    bind(output.error, output),
-    [loggerHead(LEVEL_ERROR)],
-  ),
+  () => (...args) => output.error(loggerHead(LEVEL_ERROR), ...args),
   always(F),
 )(level)
 
 // warn :: (String, Output) -> Function
 const warn = (level, output) => ifElse(
   level => shouldPrintLog(level, LEVEL_WARN),
-  () => partial(
-    bind(output.warn, output),
-    [loggerHead(LEVEL_WARN)],
-  ),
+  () => (...args) => output.warn(loggerHead(LEVEL_WARN), ...args),
   always(F),
 )(level)
 
 // info :: (String, Output) -> Function
 const info = (level, output) => ifElse(
   level => shouldPrintLog(level, LEVEL_INFO),
-  () => partial(
-    bind(output.info, output),
-    [loggerHead(LEVEL_INFO)],
-  ),
+  () => (...args) => output.info(loggerHead(LEVEL_INFO), ...args),
   always(F),
 )(level)
 
 // debug :: (String, Output) -> Function
 const debug = (level, output) => ifElse(
   level => shouldPrintLog(level, LEVEL_DEBUG),
-  () => partial(
-    bind(output.log, output),
-    [loggerHead(LEVEL_DEBUG)],
-  ),
+  () => (...args) => output.log(loggerHead(LEVEL_DEBUG), ...args),
   always(F),
 )(level)
 
