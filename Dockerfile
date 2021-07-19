@@ -29,6 +29,7 @@ RUN chmod +x /usr/local/bin/dumb-init
 WORKDIR /app
 
 COPY --chown=1000:1000 src/ src/
+COPY --chown=1000:1000 scripts/ scripts/
 COPY --chown=1000:1000 package.json package.json
 COPY --chown=1000:1000 yarn.lock yarn.lock
 COPY --chown=1000:1000 .babelrc .babelrc

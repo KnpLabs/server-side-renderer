@@ -1,7 +1,31 @@
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
+import fs from 'fs'
 import getBrowserProvider from './browserProvider'
+import path from 'path'
 import { reduce } from 'ramda'
+import vm from 'vm'
+
+const POST_RENDER_SCRIPT_PATH = path.join(process.cwd(), 'scripts/postRender.js')
+
+const resolvePostRenderFunction = () => {
+  const context = { postRenderFunction: () => {} }
+
+  const fileStats = fs.statSync(POST_RENDER_SCRIPT_PATH, { throwIfNoEntry: false })
+  if (fileStats && fileStats.isFile()) {
+    const script = new vm.Script(
+      fs.readFileSync(
+        POST_RENDER_SCRIPT_PATH,
+        { encoding: 'utf8', flag: 'r' },
+      ),
+    )
+
+    vm.createContext(context)
+    script.runInContext(context)
+  }
+
+  return context.postRenderFunction
+}
 
 // renderPageContent :: (Configuration, Logger, BrowserInstance, String) -> RenderedPage
 const renderPageContent = async (configuration, logger, browserInstance, url) => {
@@ -33,6 +57,8 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
     waitUntil: 'networkidle0',
     timeout: configuration.worker.renderer.timeout,
   })
+
+  await page.evaluate(resolvePostRenderFunction())
 
   return await page.content()
 }

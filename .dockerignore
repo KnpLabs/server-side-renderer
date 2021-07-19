@@ -2,6 +2,7 @@
 *
 
 !src/
+!scripts/
 !.babelrc
 !package.json
 !yarn.lock

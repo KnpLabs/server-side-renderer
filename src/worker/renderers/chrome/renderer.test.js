@@ -35,6 +35,7 @@ describe('worker :: renderer', () => {
       on: jest.fn(),
       goto: jest.fn(),
       content: jest.fn(() => Promise.resolve('My page content')),
+      evaluate: jest.fn(),
     }
 
     getBrowserProvider.mockReturnValueOnce(({
@@ -58,6 +59,7 @@ describe('worker :: renderer', () => {
       waitUntil: 'networkidle0',
       timeout: 20000,
     })
+    expect(pageMock.evaluate).toHaveBeenCalledTimes(1)
     expect(browserCleanupMock).toHaveBeenCalledTimes(1)
   })
 

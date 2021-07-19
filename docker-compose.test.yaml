@@ -25,6 +25,8 @@ services:
       - WORKER_ENABLED=1
       - QUEUE_REDIS_DSN=redis://redis:6379
       - WORKER_RENDERER_REDIRECTIONS=http://external-nginx|http://nginx
+    volumes:
+      - ./fixtures/scripts/postRender.js:/app/scripts/postRender.js:ro
 
   redis:
     image: redis:6.2.2-buster
