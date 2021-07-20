@@ -1,34 +1,11 @@
+import { POST_RENDER_SCRIPT_KEY } from '../../scriptProvider'
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
-import fs from 'fs'
 import getBrowserProvider from './browserProvider'
-import path from 'path'
 import { reduce } from 'ramda'
-import vm from 'vm'
 
-const POST_RENDER_SCRIPT_PATH = path.join(process.cwd(), 'scripts/postRender.js')
-
-const resolvePostRenderFunction = () => {
-  const context = { postRenderFunction: () => {} }
-
-  const fileStats = fs.statSync(POST_RENDER_SCRIPT_PATH, { throwIfNoEntry: false })
-  if (fileStats && fileStats.isFile()) {
-    const script = new vm.Script(
-      fs.readFileSync(
-        POST_RENDER_SCRIPT_PATH,
-        { encoding: 'utf8', flag: 'r' },
-      ),
-    )
-
-    vm.createContext(context)
-    script.runInContext(context)
-  }
-
-  return context.postRenderFunction
-}
-
-// renderPageContent :: (Configuration, Logger, BrowserInstance, String) -> RenderedPage
-const renderPageContent = async (configuration, logger, browserInstance, url) => {
+// renderPageContent :: (Configuration, Logger, ScriptProvier, BrowserInstance, String) -> RenderedPage
+const renderPageContent = async (configuration, logger, scriptProvider, browserInstance, url) => {
   const page = await browserInstance.newPage()
 
   await page.setRequestInterception(true)
@@ -58,18 +35,18 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
     timeout: configuration.worker.renderer.timeout,
   })
 
-  await page.evaluate(resolvePostRenderFunction())
+  await page.evaluate(scriptProvider.get(POST_RENDER_SCRIPT_KEY))
 
   return await page.content()
 }
 
-// render :: (Configuration, Logger) -> String
-export default (configuration, logger) => async url => {
+// render :: (Configuration, Logger, ScriptProvider) -> String
+export default (configuration, logger, scriptProvider) => async url => {
   const browserProvider = getBrowserProvider(configuration, logger)
   const browserInstance = await browserProvider.getInstance()
 
   try {
-    return await renderPageContent(configuration, logger, browserInstance, url)
+    return await renderPageContent(configuration, logger, scriptProvider, browserInstance, url)
   } catch (error) {
     logger.error(
       `An error occurred while rendering the url "${url}".`,

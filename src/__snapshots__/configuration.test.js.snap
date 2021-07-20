@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`configuration throws an exception when the log configuration is invalid 1`] = `"Invalid configuration."`;
+
+exports[`configuration throws an exception when the queue configuration is invalid 1`] = `"Invalid configuration."`;
+
+exports[`configuration throws an exception when the worker configuration is invalid 1`] = `"Invalid configuration."`;

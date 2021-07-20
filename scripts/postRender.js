@@ -6,12 +6,12 @@
  * In order to use a custom post render script you have to mount your own
  * script as a Docker volume to `/app/scripts/postRender.js` location.
  * Your custom script will just have to assign the function you want to execute
- * to the `postRenderFunction` variable.
+ * to the `script` variable.
  *
  * Example:
  * ```javascript
  *     // Adds the serialized Redux store
- *     postRenderFunction = function () {
+ *     script = function () {
  *         var preloadedState = yourReduxStore.getState();
  *         var script = document.createElement('script');
  *         script.type = 'text/javascript';

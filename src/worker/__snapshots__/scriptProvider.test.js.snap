@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`worker :: scriptProvider throws an exception when requesting a non supported script 1`] = `"Non supported script key. \\"nonSupportedScript\\" provided but expected one of postRender."`;
+
+exports[`worker :: scriptProvider throws an exception when the script content is invalid 1`] = `"The script provided doesn't set the script variable as a valid function."`;
