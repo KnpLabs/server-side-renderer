@@ -225,17 +225,17 @@ describe('configuration', () => {
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
     process.env.LOG_LEVEL = 'invalid'
 
-    expect(() => createConfiguration()).toThrow('Invalid configuration.')
+    expect(() => createConfiguration()).toThrowErrorMatchingSnapshot()
   })
 
   it(`throws an exception when the queue configuration is invalid`, () => {
-    expect(() => createConfiguration()).toThrow('Invalid configuration.')
+    expect(() => createConfiguration()).toThrowErrorMatchingSnapshot()
   })
 
   it(`throws an exception when the worker configuration is invalid`, () => {
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
     process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|'
 
-    expect(() => createConfiguration()).toThrow('Invalid configuration.')
+    expect(() => createConfiguration()).toThrowErrorMatchingSnapshot()
   })
 })

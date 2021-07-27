@@ -33,10 +33,10 @@ describe('worker :: queue :: processHandler', () => {
       },
     }
 
-    expect(processHandler(configuration, loggerMock)(jobMock))  // eslint-disable-line jest/valid-expect
+    expect(processHandler(configuration, loggerMock, {})(jobMock))  // eslint-disable-line jest/valid-expect
       .resolves.toBe('My content')
     expect(render).toHaveBeenCalledTimes(1)
-    expect(render).toHaveBeenCalledWith(configuration, loggerMock)
+    expect(render).toHaveBeenCalledWith(configuration, loggerMock, {})
     expect(rendererMock).toHaveBeenCalledTimes(1)
     expect(rendererMock).toHaveBeenCalledWith('http://nginx/dynamic.html')
   })

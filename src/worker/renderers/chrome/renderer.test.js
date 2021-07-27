@@ -28,6 +28,11 @@ describe('worker :: renderer', () => {
       },
     }
 
+    const postRenderScriptMock = () => {}
+    const scriptProviderMock = {
+      get: jest.fn(() => postRenderScriptMock),
+    }
+
     const browserCleanupMock = jest.fn()
 
     const pageMock = {
@@ -35,6 +40,7 @@ describe('worker :: renderer', () => {
       on: jest.fn(),
       goto: jest.fn(),
       content: jest.fn(() => Promise.resolve('My page content')),
+      evaluate: jest.fn(),
     }
 
     getBrowserProvider.mockReturnValueOnce(({
@@ -44,7 +50,9 @@ describe('worker :: renderer', () => {
       cleanup: browserCleanupMock,
     }))
 
-    expect(await render(configuration, {})('https://nginx/dynamic.html')).toBe('My page content')
+    expect(await render(configuration, {}, scriptProviderMock)('https://nginx/dynamic.html')).toBe('My page content')
+    expect(scriptProviderMock.get).toHaveBeenCalledTimes(1)
+    expect(scriptProviderMock.get).toHaveBeenNthCalledWith(1, 'postRender')
     expect(pageMock.setRequestInterception).toHaveBeenCalledTimes(1)
     expect(pageMock.setRequestInterception).toHaveBeenCalledWith(true)
     expect(pageMock.on).toHaveBeenCalledTimes(5)
@@ -58,6 +66,8 @@ describe('worker :: renderer', () => {
       waitUntil: 'networkidle0',
       timeout: 20000,
     })
+    expect(pageMock.evaluate).toHaveBeenCalledTimes(1)
+    expect(pageMock.evaluate).toHaveBeenNthCalledWith(1, postRenderScriptMock)
     expect(browserCleanupMock).toHaveBeenCalledTimes(1)
   })
 

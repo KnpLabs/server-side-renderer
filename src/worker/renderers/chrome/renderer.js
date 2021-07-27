@@ -1,10 +1,11 @@
+import { POST_RENDER_SCRIPT_KEY } from '../../scriptProvider'
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
 import getBrowserProvider from './browserProvider'
 import { reduce } from 'ramda'
 
-// renderPageContent :: (Configuration, Logger, BrowserInstance, String) -> RenderedPage
-const renderPageContent = async (configuration, logger, browserInstance, url) => {
+// renderPageContent :: (Configuration, Logger, ScriptProvier, BrowserInstance, String) -> RenderedPage
+const renderPageContent = async (configuration, logger, scriptProvider, browserInstance, url) => {
   const page = await browserInstance.newPage()
 
   await page.setRequestInterception(true)
@@ -34,16 +35,18 @@ const renderPageContent = async (configuration, logger, browserInstance, url) =>
     timeout: configuration.worker.renderer.timeout,
   })
 
+  await page.evaluate(scriptProvider.get(POST_RENDER_SCRIPT_KEY))
+
   return await page.content()
 }
 
-// render :: (Configuration, Logger) -> String
-export default (configuration, logger) => async url => {
+// render :: (Configuration, Logger, ScriptProvider) -> String
+export default (configuration, logger, scriptProvider) => async url => {
   const browserProvider = getBrowserProvider(configuration, logger)
   const browserInstance = await browserProvider.getInstance()
 
   try {
-    return await renderPageContent(configuration, logger, browserInstance, url)
+    return await renderPageContent(configuration, logger, scriptProvider, browserInstance, url)
   } catch (error) {
     logger.error(
       `An error occurred while rendering the url "${url}".`,

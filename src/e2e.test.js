@@ -23,6 +23,26 @@ describe('e2e :: render', () => {
         `))
   })
 
+  it(`asserts that a static page with post render script is rendered`, async () => {
+    const res = await fetch(`http://manager:8080/render?url=http://nginx/post-render-script.html`)
+    const content = await res.text()
+
+    expect(res.status).toBe(200)
+    expect(trimStringForComparison(content)).toBe(trimStringForComparison(`
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <meta charset="utf-8">
+                    <title>A static HTML page (post render script)</title>
+                </head>
+                <body>
+                    <h1>A static HTML page (post render script)</h1>
+                    <p>This element has been created by the post render script.</p>
+                </body>
+            </html>
+        `))
+  })
+
   it(`asserts that a dynamic page is rendered`, async () => {
     const res = await fetch(`http://manager:8080/render?url=http://nginx/dynamic.html`)
     const content = await res.text()
