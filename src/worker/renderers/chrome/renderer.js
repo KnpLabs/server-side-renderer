@@ -35,7 +35,10 @@ const renderPageContent = async (configuration, logger, scriptProvider, browserI
     timeout: configuration.worker.renderer.timeout,
   })
 
-  await page.evaluate(scriptProvider.get(POST_RENDER_SCRIPT_KEY))
+  await page.exposeFunction('postRender', scriptProvider.get(POST_RENDER_SCRIPT_KEY))
+  await page.evaluate(`(async () => {
+    await window.postRender();
+  })()`)
 
   return await page.content()
 }
