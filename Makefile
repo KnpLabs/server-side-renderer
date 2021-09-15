@@ -8,7 +8,7 @@ dev: cp-env start
 
 .PHONY: start
 start:
-	docker-compose -f docker-compose.${STAGE}.yaml build  --no-cache
+	docker-compose -f docker-compose.${STAGE}.yaml build
 	docker-compose -f docker-compose.${STAGE}.yaml up -d
 
 .PHONY: stop
