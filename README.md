@@ -131,11 +131,11 @@ This command will run unit and end to end tests.
 
 | Command              | Description                                                                      |
 | -------------------- | -------------------------------------------------------------------------------- |
-| `dev`                | Build and start the stack (Combination of `cp-env`, `start`, `install-deps`)     |
-| `cp-env`             | Copy the `.env.dist` file into `.env` if it does not exist                       |
-| `start`              | Start the docker-compose stack                                                   |
-| `stop`               | Stop the docker-compose stack                                                    |
-| `install-deps`       | Install front dependencies                                                       |
+| `dev`                | Builds and start the stack (Combination of `cp-env`, `start`, `install-deps`)    |
+| `cp-env`             | Copies the `.env.dist` file into `.env` if it does not exist                     |
+| `start`              | Starts the docker-compose stack                                                  |
+| `stop`               | Stops the docker-compose stack                                                   |
+| `install-deps`       | Installs front dependencies                                                      |
 |                      |                                                         |
 | `test`               | Runs the tests (unit + end to end)                                               |
 |                      |                                                         |
@@ -143,9 +143,9 @@ This command will run unit and end to end tests.
 | `lint-js`            | Runs the JavaScript's linter                                                     |
 | `fix-js`             | Fixes JavaScript code styles issues                                              |
 |                      |                                                         |
-| `build`              | Build docker image (image tag required)                                          |
-| `push`               | Push docker image on DockerHub (image tag required)                              |
-| `push-latest`        | Push docker image with latest tag (image tag required)                           |
+| `build`              | Builds docker image (image tag required)                                         |
+| `push`               | Pushes docker image on DockerHub (image tag required)                            |
+| `push-latest`        | Pushes docker image with latest tag (image tag required)                         |
 
 ## Maintainers
 
