@@ -129,23 +129,23 @@ This command will run unit and end to end tests.
 
 ## Available make targets
 
-| Command              | Description                                                                      |
-| -------------------- | -------------------------------------------------------------------------------- |
-| `dev`                | Builds and start the stack (Combination of `cp-env`, `start`, `install-deps`)    |
-| `cp-env`             | Copies the `.env.dist` file into `.env` if it does not exist                     |
-| `start`              | Starts the docker-compose stack                                                  |
-| `stop`               | Stops the docker-compose stack                                                   |
-| `install-deps`       | Installs front dependencies                                                      |
-|                      |                                                         |
-| `test`               | Runs the tests (unit + end to end)                                               |
-|                      |                                                         |
-| `lint-dockerfiles`   | Runs the Dockerfile's linter                                                     |
-| `lint-js`            | Runs the JavaScript's linter                                                     |
-| `fix-js`             | Fixes JavaScript code styles issues                                              |
-|                      |                                                         |
-| `build`              | Builds docker image (image tag required)                                         |
-| `push`               | Pushes docker image on DockerHub (image tag required)                            |
-| `push-latest`        | Pushes docker image with latest tag (image tag required)                         |
+| Command              | Description                                                                          |
+| -------------------- | -------------------------------------------------------------------------------------|
+| `dev`                | Builds and starts the stack (Combination of `cp-env`, `start`, `install-deps`)       |
+| `cp-env`             | Copies the `.env.dist` file into `.env` if it does not exist                         |
+| `start`              | Starts the docker-compose stack                                                      |
+| `stop`               | Stops the docker-compose stack                                                       |
+| `install-deps`       | Installs front dependencies                                                          |
+|                      |                                                                                      |
+| `test`               | Runs the tests (unit + end to end)                                                   |
+|                      |                                                                                      |
+| `lint-dockerfiles`   | Runs the Dockerfile's linter                                                         |
+| `lint-js`            | Runs the JavaScript's linter                                                         |
+| `fix-js`             | Fixes JavaScript code styles issues                                                  |
+|                      |                                                                                      |
+| `build`              | Builds the Docker image (image tag required)                                         |
+| `push`               | Pushes the Docker image on DockerHub (image tag required)                            |
+| `push-latest`        | Pushes the Docker image with latest tag (image tag required)                         |
 
 ## Maintainers
 
