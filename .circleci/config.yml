@@ -4,7 +4,7 @@ references:
   defaults: &defaults
     working_directory: ~/server-side-renderer
     machine:
-      image: ubuntu-1604:202104-01
+      image: ubuntu-2004:202107-02
       docker_layer_caching: true
 
 jobs:
