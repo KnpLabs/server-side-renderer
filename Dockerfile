@@ -1,4 +1,4 @@
-FROM node:14.17.0-slim as dev
+FROM node:16.13.0-slim as dev
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
@@ -6,20 +6,20 @@ FROM node:14.17.0-slim as dev
 # hadolint ignore=DL4006,DL3015
 RUN apt-get update \
     && apt-get install -y \
-      wget=1.18-5+deb9u3 \
-      gnupg=2.1.18-8~deb9u4 \
+      wget=1.20.1-1.1 \
+      gnupg=2.2.12-1+deb10u1 \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y \
-      procps=2:3.3.12-3+deb9u1 \
+      procps=2:3.3.15-2 \
       google-chrome-stable=96.0.4664.45-1 \
-      fonts-ipafont-gothic=00303-16 \
-      fonts-wqy-zenhei=0.9.45-6 \
-      fonts-thai-tlwg=1:0.6.3-1 \
-      fonts-kacst=2.01+mry-12 \
-      fonts-freefont-ttf=20120503-6 \
-      libxss1=1:1.2.2-1 \
+      fonts-ipafont-gothic=00303-18 \
+      fonts-wqy-zenhei=0.9.45-7 \
+      fonts-thai-tlwg=1:0.7.1-1 \
+      fonts-kacst=2.01+mry-14 \
+      fonts-freefont-ttf=20120503-9 \
+      libxss1=1:1.2.3-1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
