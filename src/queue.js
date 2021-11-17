@@ -4,7 +4,10 @@ import Bull from 'bull'
  * @type Queue = Bull.Queue
  */
 
-export const DEFAULT_QUEUE_OPTIONS = {}
+export const DEFAULT_QUEUE_OPTIONS = {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
+}
 
 export const DEFAULT_JOB_OPTIONS = {
   attempts: 1,
