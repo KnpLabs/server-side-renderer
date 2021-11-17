@@ -6,22 +6,22 @@
   "dependencies": {
     "bull": "^3.29.3",
     "express": "^4.17.1",
-    "puppeteer-core": "^10.4.0",
+    "puppeteer-core": "^11.0.0",
     "ramda": "^0.27.1",
     "tree-kill": "^1.2.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.15.8",
-    "@babel/node": "^7.15.8",
-    "@babel/preset-env": "^7.15.8",
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
     "babel-jest": "^27.3.1",
-    "eslint": "^8.0.1",
-    "eslint-plugin-jest": "^25.2.2",
+    "eslint": "^8.2.0",
+    "eslint-plugin-jest": "^25.2.4",
     "jest": "^27.3.1",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.15",
     "regenerator-runtime": "^0.13.9"
   },
   "scripts": {
