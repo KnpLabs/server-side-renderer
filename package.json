@@ -17,7 +17,7 @@
     "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "babel-jest": "^27.4.2",
-    "eslint": "^8.2.0",
+    "eslint": "^8.4.0",
     "eslint-plugin-jest": "^25.3.0",
     "jest": "^27.4.3",
     "node-fetch": "^2.6.1",
