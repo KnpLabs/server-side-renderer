@@ -34,6 +34,9 @@ COPY --chown=1000:1000 package.json package.json
 COPY --chown=1000:1000 yarn.lock yarn.lock
 COPY --chown=1000:1000 .babelrc .babelrc
 
+ENV BABEL_ENV=development
+ENV NODE_ENV=development
+
 RUN yarn install && yarn cache clean
 
 USER 1000
