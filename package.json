@@ -15,14 +15,14 @@
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.7",
     "@babel/node": "^7.16.8",
+    "@babel/plugin-transform-runtime": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
     "babel-jest": "^27.4.6",
     "eslint": "^8.6.0",
     "eslint-plugin-jest": "^25.3.4",
     "jest": "^27.4.7",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.15",
-    "regenerator-runtime": "^0.13.9"
+    "nodemon": "^2.0.15"
   },
   "scripts": {
     "start-dev": "nodemon --watch src/ --ignore 'src/**/*.test.js' --exec babel-node src/index.js",
