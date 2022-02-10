@@ -2043,6 +2043,13 @@ cron-parser@^4.2.1:
   dependencies:
     luxon "^1.28.0"
 
+cross-fetch@3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
+
 cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -4436,23 +4443,23 @@ pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@^13.2.0:
-  version "13.2.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-13.2.0.tgz#2710bdffad34a3cf7e9e4a1488bf14deb9ddf599"
-  integrity sha512-EfQlh6osciVLf9dY0a/rLNE4DzaxfK+T97mYyd5opY9u2MyBrr8NbayBhK1NEDoUC1w+FYnNI1oZg2ybEF3MNQ==
+puppeteer-core@^13.3.0:
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-13.3.0.tgz#7473ccd9486d91f23f222e44b2837cde258db937"
+  integrity sha512-ZqMIpI/gJzCJXtjTx7PKR2uZoAt3GG71Md96lUuG6XEUW0C7ZyMlQzNPlfAoYYq/REmI/BR2v69uJTm8Vl+g/Q==
   dependencies:
+    cross-fetch "3.1.5"
     debug "4.3.3"
     devtools-protocol "0.0.960912"
     extract-zip "2.0.1"
     https-proxy-agent "5.0.0"
-    node-fetch "2.6.7"
     pkg-dir "4.2.0"
     progress "2.0.3"
     proxy-from-env "1.1.0"
     rimraf "3.0.2"
     tar-fs "2.1.1"
     unbzip2-stream "1.4.3"
-    ws "8.2.3"
+    ws "8.5.0"
 
 qs@6.9.6:
   version "6.9.6"
@@ -5396,10 +5403,10 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-ws@8.2.3:
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.3.tgz#63a56456db1b04367d0b721a0b80cae6d8becbba"
-  integrity sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==
+ws@8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.5.0.tgz#bfb4be96600757fe5382de12c670dab984a1ed4f"
+  integrity sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==
 
 ws@^7.4.6:
   version "7.5.5"
