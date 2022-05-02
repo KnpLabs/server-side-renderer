@@ -20,7 +20,7 @@
     "eslint": "^8.14.0",
     "eslint-plugin-jest": "^26.1.4",
     "jest": "^27.5.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.2.4",
     "nodemon": "^2.0.16",
     "regenerator-runtime": "^0.13.9"
   },
