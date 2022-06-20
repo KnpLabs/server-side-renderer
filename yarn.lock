@@ -4269,10 +4269,10 @@ pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@^14.4.0:
-  version "14.4.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-14.4.0.tgz#21ba086ef416ac97dc2cd6591c219bee2473bce6"
-  integrity sha512-1G+PV+dSpiGgQagDyWlz2yOEuoIsJbfiwF5jZzEr3TlvVZ16d7r3r9J4Ce5O4R1TkzPLMd9NHxk3sS0495xJ/g==
+puppeteer-core@^14.4.1:
+  version "14.4.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-14.4.1.tgz#12ed62be7ebcdbde89c5a05c44815aa012ee1c2b"
+  integrity sha512-ykeQf8vAFVziQWsGu0AQ782KZgFlcQS/wDwbBJuKyR7zdb+rIKEBLpyeE46KUhbw/TjNyhb7MPFb/qrO9xIs0A==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
