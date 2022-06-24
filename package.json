@@ -21,7 +21,7 @@
     "eslint-plugin-jest": "^26.5.3",
     "jest": "^28.1.1",
     "node-fetch": "^2",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.18",
     "regenerator-runtime": "^0.13.9"
   },
   "scripts": {
