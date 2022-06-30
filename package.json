@@ -19,7 +19,7 @@
     "babel-jest": "^28.1.1",
     "eslint": "^8.18.0",
     "eslint-plugin-jest": "^26.5.3",
-    "jest": "^28.1.1",
+    "jest": "^28.1.2",
     "node-fetch": "^2",
     "nodemon": "^2.0.18",
     "regenerator-runtime": "^0.13.9"
