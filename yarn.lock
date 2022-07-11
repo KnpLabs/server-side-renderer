@@ -3942,10 +3942,10 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer-core@^15.3.1:
-  version "15.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-15.3.1.tgz#e64b95d53d3d47af28db908b7146cbc3d791bb1f"
-  integrity sha512-oGzevEZJHCT/vLJq0yIL2zvkxdr6ElDnuSEpdZjmqpLrn0xBiGXNlXC8yqu9y8z6QW4dU4akr6sAAdpMP+cQxQ==
+puppeteer-core@^15.3.2:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-15.3.2.tgz#d4f1bfcaa8922fc05d4afcd9442348f68a7e0a7a"
+  integrity sha512-Fmca9UzXmJkRrvGBgUmrffGD2BlulUTfsVefV1+vqfNm4PnlZ/U1bfD6X8XQ0nftyyg520tmSKd81yH3Z2tszg==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
