@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "bull": "^4.8.4",
+    "bull": "^4.8.5",
     "express": "^4.18.1",
     "puppeteer-core": "^15.4.0",
     "ramda": "^0.28.0",
