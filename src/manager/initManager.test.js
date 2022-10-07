@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime' // needed to be able to execute transpiled generator functions like async/await
 import createRequestRegistry from './requestRegistry'
 import initHttpServer from './http-server'
 import initManager from './initManager'

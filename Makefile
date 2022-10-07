@@ -13,7 +13,7 @@ start:
 
 .PHONY: stop
 stop:
-	docker-compose -f docker-compose.${STAGE}.yaml stop
+	docker-compose -f docker-compose.${STAGE}.yaml down
 
 .PHONY: test
 test:
