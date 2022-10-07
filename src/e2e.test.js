@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime' // needed to be able to execute transpiled generator functions like async/await
 import fetch from 'node-fetch'
 
 const trimStringForComparison = str => str.replace(/^[\s]+|[\s]+$/gm, '').replace(/\n/g, '')

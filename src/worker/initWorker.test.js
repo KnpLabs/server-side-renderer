@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime' // needed to be able to execute transpiled generator functions like async/await
 import initWorker from './initWorker'
 
 describe('worker :: initWorker', () => {
