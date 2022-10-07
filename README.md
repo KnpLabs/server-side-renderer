@@ -21,6 +21,10 @@ and processed sequentially.
 Every replica can be configured to be a manager, a worker or both (see the
 [configuration](#configuration) section to find out how to configure them).
 
+> We strongly recommend to configure a cache layer on top of this component to
+avoid re-generating the same resource multiple times (except if not
+specifically needed).
+
 ### Manager
 
 Managers are responsible to expose the web-service to let other services
@@ -34,11 +38,11 @@ available jobs in the Redis queue.
 
 ## Requirements
 
-1. docker >= v19.03
-2. docker-compose >= 1.19.0
-3. redis
+1. Docker >= v19.03
+2. Docker compose >= 1.19.0
+3. Redis
 
-## How to use
+## How to use it
 
 ### Basic usage
 
