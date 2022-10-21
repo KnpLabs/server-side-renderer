@@ -83,6 +83,70 @@ docker-compose -f docker-compose.yaml up -d
 
 After that you should be able to access the service via `http://localhost/render?url=https://your-website.com/your-dynamic-page`.
 
+### Scaling
+
+If you have to deal with lots of requests, you can add more processing power by
+scaling the worker nodes.
+
+To achieve that you have to configure a manager service who's only purpose is
+to manage the rendering requests and a worker service who's purpose is to
+actually render the html page.
+
+In order to do that follow the steps described below.
+
+Create a `docker-compose.yaml` file with the following content:
+
+```yaml
+version: '3.8'
+
+services:
+  manager:
+    image: knplabs/server-side-renderer
+    depends_on:
+      - redis
+    environment:
+      - QUEUE_REDIS_DSN=redis://redis:6379
+      - MANAGER_ENABLED=1
+      - WORKER_ENABLED=0
+    ports:
+      - "80:8080"
+
+  worker:
+    image: knplabs/server-side-renderer
+    depends_on:
+      - redis
+    environment:
+      - QUEUE_REDIS_DSN=redis://redis:6379
+      - MANAGER_ENABLED=0
+      - WORKER_ENABLED=1
+    ports:
+      - "80:8080"
+
+  redis:
+    image: redis:6.2.2-buster
+```
+
+Run:
+
+```bash
+docker-compose -f docker-compose.yaml up -d
+```
+
+After that you should be able to access the service via `http://localhost/render?url=https://your-website.com/your-dynamic-page`.
+
+Scale the worker service replicas by running:
+
+```bash
+docker-compose -f docker-compose.yaml scale worker=<number-of-replicas>
+```
+
+The `<number-of-replicas>` represents an integer defining the number of service
+replicas you want to run (the total number of replicas not the ones you want to
+add). Keep in mind that the number of replicas you start represents the number
+of requests that can be simultaneously handled by the renderer. All requests
+exceeding that number wiull be queued and handled once there will be free
+workers.
+
 ## Configuration
 
 Service configuration is entirely done via environment variables.
