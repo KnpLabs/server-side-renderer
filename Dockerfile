@@ -6,19 +6,19 @@ FROM node:18.13.0-slim as dev
 # hadolint ignore=DL4006,DL3015
 RUN apt-get update \
     && apt-get install -y \
-      wget=1.20.1-1.1 \
-      gnupg=2.2.12-1+deb10u2 \
+      wget=1.21-1+deb11u1 \
+      gnupg=2.2.27-2+deb11u2 \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y \
-      procps=2:3.3.15-2 \
+      procps=2:3.3.17-5 \
       google-chrome-stable=108.0.5359.124-1 \
-      fonts-ipafont-gothic=00303-18 \
-      fonts-wqy-zenhei=0.9.45-7 \
-      fonts-thai-tlwg=1:0.7.1-1 \
-      fonts-kacst=2.01+mry-14 \
-      fonts-freefont-ttf=20120503-9 \
+      fonts-ipafont-gothic=00303-21 \
+      fonts-wqy-zenhei=0.9.45-8 \
+      fonts-thai-tlwg=1:0.7.2-1 \
+      fonts-kacst=2.01+mry-15 \
+      fonts-freefont-ttf=20120503-10 \
       libxss1=1:1.2.3-1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
