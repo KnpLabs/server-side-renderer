@@ -1801,10 +1801,10 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-bull@^4.10.2:
-  version "4.10.2"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-4.10.2.tgz#af53545b394001755cf7c6b30bac295eeb5e0420"
-  integrity sha512-xa65xtWjQsLqYU/eNaXxq9VRG8xd6qNsQEjR7yjYuae05xKrzbVMVj2QgrYsTMmSs/vsqJjHqHSRRiW1+IkGXQ==
+bull@^4.10.3:
+  version "4.10.3"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-4.10.3.tgz#0775614fa29d2c90b7098f05f4b910779a7a80c9"
+  integrity sha512-pp403srpkn9tYi7Z3Mu0sozehZ7rEEFGNJnN+nLxQwml6MySzefC9bPeCYedZoCkXdZ6VbIB8uNkMZg+hN/dAg==
   dependencies:
     cron-parser "^4.2.1"
     debuglog "^1.0.0"
@@ -1812,7 +1812,6 @@ bull@^4.10.2:
     ioredis "^5.0.0"
     lodash "^4.17.21"
     msgpackr "^1.5.2"
-    p-timeout "^3.2.0"
     semver "^7.3.2"
     uuid "^8.3.0"
 
@@ -3833,11 +3832,6 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-p-finally@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/p-finally/-/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"
-  integrity sha1-P7z7FbiZpEEjs0ttzBi3JDNqLK4=
-
 p-limit@^2.0.0, p-limit@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-2.3.0.tgz#3dd33c647a214fdfffd835933eb086da0dc21db1"
@@ -3872,13 +3866,6 @@ p-locate@^5.0.0:
   integrity sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
   dependencies:
     p-limit "^3.0.2"
-
-p-timeout@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/p-timeout/-/p-timeout-3.2.0.tgz#c7e17abc971d2a7962ef83626b35d635acf23dfe"
-  integrity sha512-rhIwUycgwwKcP9yTOOFK/AKsAopjjCakVqLHePO3CC6Mir1Z99xT+R63jZxAT5lFZLa2inS5h+ZS2GvR99/FBg==
-  dependencies:
-    p-finally "^1.0.0"
 
 p-try@^2.0.0:
   version "2.2.0"
