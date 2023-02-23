@@ -1,4 +1,4 @@
-FROM node:18.14.1-slim as dev
+FROM node:18.14.2-slim as dev
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y \
       procps=2:3.3.17-5 \
-      google-chrome-stable=110.0.5481.100-1 \
+      google-chrome-stable=110.0.5481.177-1 \
       fonts-ipafont-gothic=00303-21 \
       fonts-wqy-zenhei=0.9.45-8 \
       fonts-thai-tlwg=1:0.7.2-1 \
