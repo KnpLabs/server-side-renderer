@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y \
       procps=2:3.3.17-5 \
-      google-chrome-stable=112.0.5615.49-1 \
+      google-chrome-stable=112.0.5615.165-1 \
       fonts-ipafont-gothic=00303-21 \
       fonts-wqy-zenhei=0.9.45-8 \
       fonts-thai-tlwg=1:0.7.2-1 \
