@@ -2011,10 +2011,10 @@ buffer@^5.2.1:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-bull@^4.12.2:
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-4.12.2.tgz#302ee8f35fd37c31baf58817cce9a2c6930c3c5d"
-  integrity sha512-WPuc0VCYx+cIVMiZtPwRpWyyJFBrj4/OgKJ6n9Jf4tIw7rQNV+HAKQv15UDkcTvfpGFehvod7Fd1YztbYSJIDQ==
+bull@^4.12.3:
+  version "4.12.3"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-4.12.3.tgz#3b767b719d7ee196e5ee20fcfe5d7bbeced71f7b"
+  integrity sha512-TGHuvHr6NYN6mQyHTFHJELdEu4JMCir8zcNd9Uv91qTWILiTpoglC3Un1PsxMwNXr49BVfdWE0xuB1nV4+cJPA==
   dependencies:
     cron-parser "^4.2.1"
     get-port "^5.1.1"
