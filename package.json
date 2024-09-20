@@ -21,7 +21,7 @@
     "eslint-plugin-jest": "^28.8.3",
     "jest": "^29.7.0",
     "node-fetch": "^2",
-    "nodemon": "^3.1.5"
+    "nodemon": "^3.1.6"
   },
   "scripts": {
     "start-dev": "nodemon --watch src/ --ignore 'src/**/*.test.js' --exec babel-node src/index.js",
