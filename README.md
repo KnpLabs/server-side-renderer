@@ -3,7 +3,7 @@ Server-side-renderer
 
 | Branch    | Status | Release | Licence |
 | --------- | ------ | ------- | ------- |
-| `master`  | [![CircleCI](https://circleci.com/gh/KnpLabs/server-side-renderer/tree/master.svg?style=svg&circle-token=1feb6f789ade0c11ee8b87e90eadbe9e6778fcb7)](https://circleci.com/gh/KnpLabs/server-side-renderer/tree/master) | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/knplabs/server-side-renderer) | ![GitHub](https://img.shields.io/github/license/knplabs/server-side-renderer)
+| `master`  | [![CircleCI](https://dl.circleci.com/status-badge/img/gh/KnpLabs/server-side-renderer/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/KnpLabs/server-side-renderer/tree/master) | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/knplabs/server-side-renderer) | ![GitHub](https://img.shields.io/github/license/knplabs/server-side-renderer)
 
 ## Description
 
