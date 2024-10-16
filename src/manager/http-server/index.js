@@ -2,12 +2,14 @@ import attachErrorMiddleware from './middlewares/error'
 import attachNotFoundMiddleware from './middlewares/notFound'
 import attachNotSupportedMiddleware from './middlewares/notSupported'
 import attachRenderMiddleware from './middlewares/render'
+import attachRenderImageMiddleware from './middlewares/render-image'
 import express from 'express'
 import { pipe } from 'ramda'
 
 // createHttpServer => (Configuration, Logger, Queue, RequestRegistry) -> HttpServer
 export default (configuration, logger, queue, requestRegistry) => pipe(
   attachRenderMiddleware(configuration, logger, queue, requestRegistry),
+  attachRenderImageMiddleware(configuration, logger, queue, requestRegistry),
   attachNotFoundMiddleware,
   attachNotSupportedMiddleware,
   attachErrorMiddleware(logger),

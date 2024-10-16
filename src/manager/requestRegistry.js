@@ -28,7 +28,8 @@ export default () => ({
 
   complete: function (id, result, status = 200) {
     if (this.has(id)) {
-      this._requests[id].res.status(status).send(result)
+      //this._requests[id].res.status(status).send(result)
+      this._requests[id].res.status(status).end(Buffer.from(result, 'base64'))
       delete this._requests[id]
     }
   },
