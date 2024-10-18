@@ -1,4 +1,5 @@
-import render from '../renderers/chrome'
+import render from '../renderers/chrome/renderer'
+import renderImage from '../renderers/chrome/image-renderer'
 
 // isJobExpired :: (Configuration, Job) -> Boolean
 const isJobExpired = (configuration, job) =>
@@ -12,5 +13,12 @@ export default (configuration, logger, scriptProvider) => async job => {
 
   logger.debug(`Processing job "${job.id}" with url "${job.data.url}".`)
 
-  return await render(configuration, logger, scriptProvider)(job.data.url)
+  switch(job.data.type) {
+    case 'html':
+      return await render(configuration, logger, scriptProvider)(job.data.url)
+    case 'image':
+      return await renderImage(configuration, logger, scriptProvider)(job.data.url)
+    default:
+      throw new Error(`Unknown job type "${job.data.type}".`)
+  }
 }
