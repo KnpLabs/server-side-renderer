@@ -6,7 +6,7 @@
   "dependencies": {
     "bull": "^4.16.4",
     "express": "^4.21.1",
-    "puppeteer-core": "^23.7.1",
+    "puppeteer-core": "^23.10.3",
     "ramda": "^0.30.1",
     "tree-kill": "^1.2.2",
     "uuid": "^11.0.3"
