@@ -222,5 +222,5 @@ the [contributing guidelines](https://github.com/KnpLabs/server-side-renderer/bl
 before opening an issue or a pull request.
 
 The following people maintain and can merge into this library:
- - [@alexpozzi](https://github.com/alexpozzi)
  - [@hlegay](https://github.com/hlegay)
+ - [@lcouellan](https://github.com/lcouellan)
