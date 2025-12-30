@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "bull": "^4.16.5",
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "puppeteer-core": "^24.34.0",
     "ramda": "^0.32.0",
     "tree-kill": "^1.2.2",
