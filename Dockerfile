@@ -7,13 +7,13 @@ FROM node:22.11.0-slim as dev
 RUN apt-get update \
     && apt-get install -y \
       wget=1.21.3-1+deb12u1 \
-      gnupg=2.2.40-1.1 \
+      gnupg=2.2.40-1.1+deb12u1 \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y \
       procps=2:4.0.2-3 \
-      google-chrome-stable=138.* \
+      google-chrome-stable=143.* \
       fonts-ipafont-gothic=00303-23 \
       fonts-wqy-zenhei=0.9.45-8 \
       fonts-thai-tlwg=1:0.7.3-1 \
