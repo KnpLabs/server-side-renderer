@@ -2,9 +2,7 @@ import { POST_RENDER_SCRIPT_KEY } from '../../scriptProvider'
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
 import getBrowserProvider from './browserProvider'
-import { reduce } from 'ramda'
 
-// renderPageContent :: (Configuration, Logger, ScriptProvier, BrowserInstance, String) -> RenderedPage
 const renderPageContent = async (configuration, logger, scriptProvider, browserInstance, url) => {
   const page = await browserInstance.newPage()
 
@@ -25,7 +23,7 @@ const renderPageContent = async (configuration, logger, scriptProvider, browserI
         return arg
       }),
     ))
-    const text = reduce((acc, cur) => acc += acc !== '' ? `, ${cur}` : cur, '', args)
+    const text = args.map(arg => String(arg)).join(', ')
 
     logger.debug(`CONSOLE.${msg.type()}: ${msg.text()}\n${text}`)
   })
@@ -40,7 +38,6 @@ const renderPageContent = async (configuration, logger, scriptProvider, browserI
   return await page.content()
 }
 
-// render :: (Configuration, Logger, ScriptProvider) -> String
 export default (configuration, logger, scriptProvider) => async url => {
   const browserProvider = getBrowserProvider(configuration, logger)
   const browserInstance = await browserProvider.getInstance()

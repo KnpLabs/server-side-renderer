@@ -1,16 +1,6 @@
 import puppeteer from 'puppeteer-core'
 import treekill from 'tree-kill'
 
-/**
- * @type BrowserProvider = {
- *     getInstance() :: () -> Puppeteer.Browser,
- *     cleanupInstance :: () -> _,
- * }
- *
- * @type BrowserInstance = Puppeteer.Browser
- */
-
-// getBrowserProvider :: (Configuration, Logger) -> BrowserProvider
 export default (configuration, logger) => ({
   _logger: logger,
   _instance: null,
