@@ -1,17 +1,12 @@
-import { juxt, when } from 'ramda'
 import { resolveJobDuration } from './utils'
 
-// jobCompletedHandler :: (Logger, Queue, RequestRegistry) -> Function
-export default (logger, queue, requestRegistry) => (jobId, result) => when(
-  jobId => requestRegistry.has(jobId),
-  juxt([
-    jobId => requestRegistry.complete(jobId, JSON.parse(result)),
-    async jobId => {
-      const job = await queue.getJob(jobId)
+export default (logger, queue, requestRegistry) => async (jobId, result) => {
+  if (!requestRegistry.has(jobId)) return
+  requestRegistry.complete(jobId, JSON.parse(result))
 
-      logger.info(`${jobId} ${job.data.url} 200 ${resolveJobDuration(job)}`)
+  const job = await queue.getJob(jobId)
+  if (!job) return
 
-      job.remove()
-    },
-  ]),
-)(jobId)
+  logger.info(`${jobId} ${job.data.url} 200 ${resolveJobDuration(job)}`)
+  await job.remove()
+}

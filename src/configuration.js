@@ -33,19 +33,14 @@ const DEFAULT_WORKER_RENDERER_CHROME_OPTIONS = [
   '--use-gl=disabled',
 ]
 
-// isDefined :: Mixed -> Boolean
 const isDefined = both(complement(isNil), complement(isEmpty))
 
-// isLogConfigurationValid :: Configuration -> Boolean
 const isLogConfigurationValid = compose(includes(__, validLogLevels), path(['log', 'level']))
 
-// isQueueConfigurationValid :: Configuration -> Boolean
 const isQueueConfigurationValid = compose(isDefined, path(['queue', 'redis_dsn']))
 
-// isManagerConfigurationValid :: Configuration -> Boolean
 const isManagerConfigurationValid = T
 
-// isWorkerConfigurationValid :: Configuration -> Boolean
 const isWorkerConfigurationValid = pipe(
   path(['worker', 'renderer', 'redirections']),
   reduce(
@@ -60,7 +55,6 @@ const isWorkerConfigurationValid = pipe(
   ),
 )
 
-// validate :: Configuration -> Boolean
 const validate = allPass([
   isLogConfigurationValid,
   isQueueConfigurationValid,
@@ -68,20 +62,16 @@ const validate = allPass([
   isWorkerConfigurationValid,
 ])
 
-// stringToArray :: String -> String -> [String]
 const stringToArray = separator => pipe(
   split(separator),
   map(trim),
   filter(complement(anyPass([isNil, isEmpty]))),
 )
 
-// commaSeparatedStringToArray :: String -> [String]
 const commaSeparatedStringToArray = stringToArray(',')
 
-// pipeSeparatedStringToArray :: String -> [String]
 const pipeSeparatedStringToArray = stringToArray('|')
 
-// generate :: _ -> Configuration
 const generate = () => ({
   log: {
     level: process.env.LOG_LEVEL ?? LEVEL_INFO,
@@ -125,7 +115,6 @@ const generate = () => ({
   },
 })
 
-// createConfiguration :: _ -> Configuration
 export default pipe(
   generate,
   unless(validate, () => { throw new Error('Invalid configuration.') }),

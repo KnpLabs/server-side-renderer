@@ -1,6 +1,5 @@
 import { formatException } from '../../../logger'
 
-// errorMiddleware :: Logger -> Express.Application -> Void
 export default logger => app =>
   app.use((error, req, res, next) => {
     logger.error(formatException(error))

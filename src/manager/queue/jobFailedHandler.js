@@ -1,27 +1,19 @@
-import { T, always, cond, juxt, test, when } from 'ramda'
 import { resolveJobDuration } from './utils'
 
-// resolveStatusCodeFromError :: String -> Integer
-const resolveStatusCodeFromError = cond([
-  [error => test(/timeout/i, error), always(504)],
-  [error => test(/timed out/i, error), always(504)],
-  [T, always(500)],
-])
+const resolveStatusCodeFromError = error => {
+  if (/timeout/i.test(error) || /timed out/i.test(error)) return 504
+  return 500
+}
 
-// jobFailedHandler :: (Logger, Queue, RequestRegistry) -> Function
-export default (logger, queue, requestRegistry) => (jobId, error) => when(
-  jobId => requestRegistry.has(jobId),
-  juxt([
-    jobId => requestRegistry.fail(
-      jobId,
-      resolveStatusCodeFromError(error),
-    ),
-    async jobId => {
-      const job = await queue.getJob(jobId)
+export default (logger, queue, requestRegistry) => async (jobId, error) => {
+  if (!requestRegistry.has(jobId)) return
 
-      logger.error(`${jobId} ${job.data.url} ${resolveStatusCodeFromError(error)} ${resolveJobDuration(job)} ${error}`)
+  const statusCode = resolveStatusCodeFromError(error)
+  requestRegistry.fail(jobId, statusCode)
 
-      job.remove()
-    },
-  ]),
-)(jobId)
+  const job = await queue.getJob(jobId)
+  if (!job) return
+
+  logger.error(`${jobId} ${job.data.url} ${statusCode} ${resolveJobDuration(job)} ${error}`)
+  await job.remove()
+}
