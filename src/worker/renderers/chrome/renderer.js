@@ -2,7 +2,6 @@ import { POST_RENDER_SCRIPT_KEY } from '../../scriptProvider'
 import browserRequestHandler from './browserRequestHandler'
 import { formatException } from './../../../logger'
 import getBrowserProvider from './browserProvider'
-import { reduce } from 'ramda'
 
 // renderPageContent :: (Configuration, Logger, ScriptProvier, BrowserInstance, String) -> RenderedPage
 const renderPageContent = async (configuration, logger, scriptProvider, browserInstance, url) => {
@@ -14,20 +13,42 @@ const renderPageContent = async (configuration, logger, scriptProvider, browserI
   page.on('error', error => logger.error(formatException(error)))
   page.on('pageerror', error => logger.error(formatException(error)))
   page.on('requestfailed', req => logger.debug(`Browser request failed. ${req.url()}. ${req.failure().errorText}`))
-  // See https://github.com/puppeteer/puppeteer/issues/3397#issuecomment-434970058
+  // See https://github.com/puppeteer/puppeteer/issues/3397
   page.on('console', async msg => {
-    const args = await Promise.all(msg.args().map(
-      jsHandle => jsHandle.executionContext().evaluate(arg => {
-        if (arg instanceof Error) {
-          return arg.message
+    const level = `CONSOLE.${msg.type()}`
+
+    try {
+      if (msg.text() !== 'JSHandle@error') {
+        logger.debug(`${level}: ${msg.text()}`)
+        return
+      }
+
+      const args = msg.args()
+
+      const extracted = await Promise.all(args.map(async handle => {
+        try {
+          const messageHandle = await handle.getProperty('message')
+          const message = await messageHandle.jsonValue().catch(() => null)
+          await messageHandle.dispose()
+
+          if (message) return String(message)
+
+          const stackHandle = await handle.getProperty('stack')
+          const stack = await stackHandle.jsonValue().catch(() => null)
+          await stackHandle.dispose()
+
+          if (stack) return String(stack)
+
+          return handle.toString()
+        } finally {
+          await handle.dispose().catch(() => {})
         }
+      }))
 
-        return arg
-      }),
-    ))
-    const text = reduce((acc, cur) => acc += acc !== '' ? `, ${cur}` : cur, '', args)
-
-    logger.debug(`CONSOLE.${msg.type()}: ${msg.text()}\n${text}`)
+      logger.debug(`${level}: ${extracted.filter(Boolean).join(', ')}`)
+    } catch (e) {
+      logger.debug(`${level}: (failed to parse console message) ${String(e?.message || e)}`)
+    }
   })
 
   await page.goto(url, {
