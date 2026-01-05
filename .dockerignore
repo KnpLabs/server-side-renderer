@@ -3,6 +3,6 @@
 
 !src/
 !scripts/
-!.babelrc
+!babel.config.cjs
 !package.json
 !yarn.lock
