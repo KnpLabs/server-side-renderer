@@ -51,7 +51,7 @@ services:
       - ./src:/app/src:ro
       - ./package.json:/app/package.json:ro
       - ./yarn.lock:/app/yarn.lock:ro
-      - ./.babelrc:/app/.babelrc:ro
+      - ./babel.config.cjs:/app/babel.config.cjs:ro
       - ./jest.config.js:/app/jest.config.js:ro
       - ./.eslintrc.json:/app/.eslintrc.json:ro
     profiles:
