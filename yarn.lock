@@ -261,14 +261,14 @@
     "@babel/template" "^7.28.6"
     "@babel/types" "^7.28.6"
 
-"@babel/node@^7.28.6":
-  version "7.28.6"
-  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.28.6.tgz#ee8091de3e87b9f0ff6726f3b682bc633b34654d"
-  integrity sha512-X3i8Zq/3Au5of74DzuYfgKS2oKRrYGcd5O5QlrB7AqspYKWy0XRTG69HDYnower3HRH/lL38IYAZVPh3OQMXVg==
+"@babel/node@^7.29.0":
+  version "7.29.0"
+  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.29.0.tgz#278d903d17bf80d361ed6ac9552125eebd5eab5f"
+  integrity sha512-9UeU8F3rx2lOZXneEW2HTnTYdA8+fXP0kr54tk7d0fPomWNlZ6WJ2H9lunr5dSvr8FNY0CDnop3Km6jZ5NAUsQ==
   dependencies:
     "@babel/register" "^7.28.6"
     commander "^6.2.0"
-    core-js "^3.30.2"
+    core-js "^3.48.0"
     node-environment-flags "^1.0.5"
     regenerator-runtime "^0.14.0"
     v8flags "^3.1.1"
@@ -2281,10 +2281,10 @@ core-js-compat@^3.43.0:
   dependencies:
     browserslist "^4.25.0"
 
-core-js@^3.30.2:
-  version "3.30.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.30.2.tgz#6528abfda65e5ad728143ea23f7a14f0dcf503fc"
-  integrity sha512-uBJiDmwqsbJCWHAwjrx3cvjbMXP7xD72Dmsn5LOJpiRmE3WbBbN5rCqQ2Qh6Ek6/eOrjlWngEynBWo4VxerQhg==
+core-js@^3.48.0:
+  version "3.48.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.48.0.tgz#1f813220a47bbf0e667e3885c36cd6f0593bf14d"
+  integrity sha512-zpEHTy1fjTMZCKLHUZoVeylt9XrzaIN2rbPXEt0k+q7JE5CkCZdo6bNq55bn24a69CH7ErAVLKijxJja4fw+UQ==
 
 cron-parser@^4.9.0:
   version "4.9.0"
