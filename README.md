@@ -223,4 +223,4 @@ before opening an issue or a pull request.
 
 The following people maintain and can merge into this library:
  - [@hlegay](https://github.com/hlegay)
- - [@lcouellan](https://github.com/lcouellan)
+ - [@EVDW](https://github.com/EVDW)
