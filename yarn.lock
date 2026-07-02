@@ -1423,10 +1423,10 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.7.tgz#eb5014dfd0b03e7f3ba2eeeff506eed89b028058"
   integrity sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==
 
-"@puppeteer/browsers@3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-3.0.5.tgz#0c546a545bd4be7f39e89862200b5e93a1776d72"
-  integrity sha512-xYXNuEQmHNIPWWcbL/skf2KF7seyp7c1xmKFRk3wmdFx7VwBsKVrtOLKs8ecaezsKPsWeF1YsgwIiElAscaryA==
+"@puppeteer/browsers@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-3.0.6.tgz#6b772e0fc11deb255c8a3c14219e34a16a2ab23d"
+  integrity sha512-B/gKoqlFkzhvzsI6jo9K1cZz9o5ypviVv/xu8CwA4grZzyVwN+XfkT+tu8T1zrauuEXv6VhS2oGX+6NL95WcKA==
   dependencies:
     modern-tar "^0.7.6"
     yargs "^18.0.0"
@@ -4238,12 +4238,12 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer-core@^25.2.1:
-  version "25.2.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-25.2.1.tgz#ebc7ea02cf742f1714652b4d34d5e267f3da1c54"
-  integrity sha512-MwEZ4FFGJ1ZLOmu/04eISxoEMKtCnHyJBRFfgpwPPSYNG6gT6Xw1laNziFSV7uwDcx3jK+ATYIo9SfOd8Uhc3w==
+puppeteer-core@^25.3.0:
+  version "25.3.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-25.3.0.tgz#f32555f3ac64af2cc44f8d632ddf2fa5f2fad95f"
+  integrity sha512-fm+wpUr2oigH1PXZvwgATrM2tYWHMDG8ASzTEe9uukCye4X5Ldx1K5BTHPFKITrIWvQQAQ256d1NpbEveBcKjA==
   dependencies:
-    "@puppeteer/browsers" "3.0.5"
+    "@puppeteer/browsers" "3.0.6"
     chromium-bidi "16.0.1"
     devtools-protocol "0.0.1638949"
     typed-query-selector "^2.12.2"
