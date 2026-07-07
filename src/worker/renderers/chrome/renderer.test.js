@@ -5,6 +5,8 @@ import render from './renderer'
 jest.mock('./browserRequestHandler', () => jest.fn().mockImplementation(() => () => {}))
 jest.mock('./browserProvider')
 
+const flushPromises = () => new Promise(resolve => setImmediate(resolve))
+
 beforeEach(() => {
   browserRequestHandler.mockClear()
   getBrowserProvider.mockClear()
@@ -68,6 +70,108 @@ describe('worker :: renderer', () => {
     expect(pageMock.evaluate).toHaveBeenCalledTimes(1)
     expect(pageMock.evaluate).toHaveBeenNthCalledWith(1, postRenderScriptMock)
     expect(browserCleanupMock).toHaveBeenCalledTimes(1)
+  })
+
+  it(`waits for browser cleanup before resolving the render`, async () => {
+    const configuration = {
+      worker: {
+        renderer: {
+          timeout: 20000,
+          authorized_request_domains: [
+            '*',
+          ],
+          authorized_request_resources: [
+            '*',
+          ],
+          redirections: [],
+        },
+      },
+    }
+
+    const scriptProviderMock = {
+      get: jest.fn(() => () => {}),
+    }
+    const pageMock = {
+      setRequestInterception: jest.fn(),
+      on: jest.fn(),
+      goto: jest.fn(),
+      content: jest.fn(() => Promise.resolve('My page content')),
+      evaluate: jest.fn(),
+    }
+    let cleanupResolve
+    const cleanupPromise = new Promise(resolve => {
+      cleanupResolve = resolve
+    })
+    const browserCleanupMock = jest.fn(() => cleanupPromise)
+
+    getBrowserProvider.mockReturnValueOnce(({
+      getInstance: () => Promise.resolve({
+        newPage: () => Promise.resolve(pageMock),
+      }),
+      cleanup: browserCleanupMock,
+    }))
+
+    const renderPromise = render(configuration, {}, scriptProviderMock)('https://nginx/dynamic.html')
+    let renderFinished = false
+    renderPromise.then(() => {
+      renderFinished = true
+    })
+
+    await flushPromises()
+
+    expect(browserCleanupMock).toHaveBeenCalledTimes(1)
+    expect(renderFinished).toBe(false)
+
+    cleanupResolve()
+
+    await expect(renderPromise).resolves.toBe('My page content')
+    expect(renderFinished).toBe(true)
+  })
+
+  it(`uses the configured page load wait condition`, async () => {
+    const configuration = {
+      worker: {
+        renderer: {
+          timeout: 20000,
+          authorized_request_domains: [
+            '*',
+          ],
+          authorized_request_resources: [
+            '*',
+          ],
+          redirections: [],
+          chrome: {
+            page_load_wait_until: 'networkidle2',
+          },
+        },
+      },
+    }
+
+    const scriptProviderMock = {
+      get: jest.fn(() => () => {}),
+    }
+    const browserCleanupMock = jest.fn()
+    const pageMock = {
+      setRequestInterception: jest.fn(),
+      on: jest.fn(),
+      goto: jest.fn(),
+      content: jest.fn(() => Promise.resolve('My page content')),
+      evaluate: jest.fn(),
+    }
+
+    getBrowserProvider.mockReturnValueOnce(({
+      getInstance: () => Promise.resolve({
+        newPage: () => Promise.resolve(pageMock),
+      }),
+      cleanup: browserCleanupMock,
+    }))
+
+    await render(configuration, {}, scriptProviderMock)('https://nginx/dynamic.html')
+
+    expect(pageMock.goto).toHaveBeenCalledWith('https://nginx/dynamic.html', {
+      waitUntil: 'networkidle2',
+      timeout: 20000,
+    })
   })
 
   it(`throws an expection when an error occurs`, async () => {
