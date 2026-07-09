@@ -52,7 +52,7 @@ const renderPageContent = async (configuration, logger, scriptProvider, browserI
   })
 
   await page.goto(url, {
-    waitUntil: 'networkidle0',
+    waitUntil: configuration.worker.renderer.chrome?.page_load_wait_until ?? 'networkidle0',
     timeout: configuration.worker.renderer.timeout,
   })
 
@@ -76,6 +76,6 @@ export default (configuration, logger, scriptProvider) => async url => {
 
     throw error
   } finally {
-    browserProvider.cleanup()
+    await browserProvider.cleanup()
   }
 }

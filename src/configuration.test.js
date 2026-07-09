@@ -55,6 +55,7 @@ describe('configuration', () => {
               '--safebrowsing-disable-auto-update',
               '--use-gl=disabled',
             ],
+            page_load_wait_until: 'networkidle0',
           },
         },
       },
@@ -105,6 +106,7 @@ describe('configuration', () => {
               '--safebrowsing-disable-auto-update',
               '--use-gl=disabled',
             ],
+            page_load_wait_until: 'networkidle0',
           },
         },
       },
@@ -155,6 +157,7 @@ describe('configuration', () => {
               '--safebrowsing-disable-auto-update',
               '--use-gl=disabled',
             ],
+            page_load_wait_until: 'networkidle0',
           },
         },
       },
@@ -175,6 +178,7 @@ describe('configuration', () => {
     process.env.WORKER_RENDERER_AUTHORIZED_REQUEST_RESOURCES = 'document, script'
     process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|http://nginx'
     process.env.WORKER_RENDERER_CHROME_OPTIONS = '--disable-dev-shm-usage,--disable-gpu'
+    process.env.WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL = 'networkidle2'
 
     expect(createConfiguration()).toStrictEqual({
       log: {
@@ -215,6 +219,7 @@ describe('configuration', () => {
               '--disable-dev-shm-usage',
               '--disable-gpu',
             ],
+            page_load_wait_until: 'networkidle2',
           },
         },
       },
@@ -235,6 +240,13 @@ describe('configuration', () => {
   it(`throws an exception when the worker configuration is invalid`, () => {
     process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
     process.env.WORKER_RENDERER_REDIRECTIONS = 'http://example.com|'
+
+    expect(() => createConfiguration()).toThrowErrorMatchingSnapshot()
+  })
+
+  it(`throws an exception when WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL is invalid`, () => {
+    process.env.QUEUE_REDIS_DSN = 'redis://redis:6379'
+    process.env.WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL = 'networkidle3'
 
     expect(() => createConfiguration()).toThrowErrorMatchingSnapshot()
   })

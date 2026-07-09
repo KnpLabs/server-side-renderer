@@ -32,6 +32,8 @@ const DEFAULT_WORKER_RENDERER_CHROME_OPTIONS = [
   '--safebrowsing-disable-auto-update',
   '--use-gl=disabled',
 ]
+const DEFAULT_WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL = 'networkidle0'
+const VALID_CHROME_PAGE_LOAD_WAIT_UNTIL_VALUES = ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']
 
 // isDefined :: Mixed -> Boolean
 const isDefined = both(complement(isNil), complement(isEmpty))
@@ -60,12 +62,19 @@ const isWorkerConfigurationValid = pipe(
   ),
 )
 
+// isPageLoadWaitUntilValid :: Configuration -> Boolean
+const isPageLoadWaitUntilValid = compose(
+  includes(__, VALID_CHROME_PAGE_LOAD_WAIT_UNTIL_VALUES),
+  path(['worker', 'renderer', 'chrome', 'page_load_wait_until']),
+)
+
 // validate :: Configuration -> Boolean
 const validate = allPass([
   isLogConfigurationValid,
   isQueueConfigurationValid,
   isManagerConfigurationValid,
   isWorkerConfigurationValid,
+  isPageLoadWaitUntilValid,
 ])
 
 // stringToArray :: String -> String -> [String]
@@ -120,6 +129,8 @@ const generate = () => ({
           process.env.WORKER_RENDERER_CHROME_OPTIONS
           ?? join(',', DEFAULT_WORKER_RENDERER_CHROME_OPTIONS),
         ),
+        page_load_wait_until: process.env.WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL
+          ?? DEFAULT_WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL,
       },
     },
   },

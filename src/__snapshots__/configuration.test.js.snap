@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`configuration throws an exception when WORKER_RENDERER_CHROME_PAGE_LOAD_WAIT_UNTIL is invalid 1`] = `"Invalid configuration."`;
+
 exports[`configuration throws an exception when the log configuration is invalid 1`] = `"Invalid configuration."`;
 
 exports[`configuration throws an exception when the queue configuration is invalid 1`] = `"Invalid configuration."`;
