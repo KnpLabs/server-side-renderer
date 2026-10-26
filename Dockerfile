@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y \
       procps=2:4.0.2-3 \
-      google-chrome-stable=150.* \
+      google-chrome-stable=156.* \
       fonts-ipafont-gothic=00303-23 \
       fonts-wqy-zenhei=0.9.45-8 \
       fonts-thai-tlwg=1:0.7.3-1 \
@@ -45,7 +45,7 @@ CMD ["yarn", "start-dev"]
 
 FROM dev as prod
 
-USER root
+USER 0
 
 ENV BABEL_ENV=production
 ENV NODE_ENV=production
